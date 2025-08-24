@@ -1,0 +1,188 @@
+<nz-steps nzType="navigation" [nzCurrent]="current">
+  <nz-step nzTitle="Info del Hotel"></nz-step>
+  <nz-step nzTitle="Habitaciones"></nz-step>
+</nz-steps>
+
+<div class="steps-content">
+  @if (current === 0) {
+  <!-- Paso 1: Info del hotel -->
+  <form nz-form [nzLayout]="'vertical'" [formGroup]="formHotel" class="w-full">
+    <!-- Nombre -->
+    <nz-form-item>
+      <nz-form-control nzErrorTip="El nombre es obligatorio (2-100 caracteres)">
+        <nz-input-group nzPrefixIcon="home">
+          <input
+            formControlName="name"
+            nz-input
+            placeholder="Nombre del hotel"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Dirección -->
+    <nz-form-item>
+      <nz-form-control
+        nzErrorTip="La dirección es obligatoria (5-200 caracteres)"
+      >
+        <nz-input-group nzPrefixIcon="environment">
+          <input
+            formControlName="address"
+            nz-input
+            placeholder="Dirección"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Teléfono -->
+    <nz-form-item>
+      <nz-form-control
+        nzErrorTip="Ingrese un número de teléfono válido (máx 30)"
+      >
+        <nz-input-group nzPrefixIcon="phone">
+          <input
+            formControlName="phoneNumber"
+            nz-input
+            placeholder="Teléfono"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Estrellas -->
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Debe estar entre 1 y 5 estrellas">
+        <nz-input-group nzPrefixIcon="star">
+          <input
+            type="number"
+            formControlName="stars"
+            nz-input
+            placeholder="Estrellas"
+            min="1"
+            max="5"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  } @if (current === 1) {
+  <!-- Paso 2: Habitaciones -->
+  <div class="max-h-[200px] overflow-y-auto pr-2">
+    <form nz-form [formGroup]="formRoom" (ngSubmit)="addRoom()">
+      <!-- Número de habitación -->
+      <nz-form-item>
+        <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="hab"
+          >Número habitación</nz-form-label
+        >
+        <nz-form-control
+          nzErrorTip="El número es obligatorio y máx 100 caracteres"
+        >
+          <input nz-input formControlName="number" class="w-40" id="hab" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Precio base -->
+      <nz-form-item>
+        <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="price"
+          >Precio base</nz-form-label
+        >
+        <nz-form-control nzErrorTip="El precio base debe ser mayor a 0.01">
+          <input
+            type="number"
+            nz-input
+            formControlName="basePrice"
+            step="0.01"
+            class="w-32"
+            id="price"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Costo mantenimiento -->
+      <nz-form-item>
+        <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="mant"
+          >Costo Mantenimiento</nz-form-label
+        >
+
+        <nz-form-control nzErrorTip="El costo de mantenimiento debe ser ≥ 0">
+          <input
+            type="number"
+            nz-input
+            formControlName="maintenanceCost"
+            step="0.01"
+            class="w-32"
+            id="mant"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Botón agregar -->
+      <nz-form-item>
+        <button nz-button nzType="primary" [disabled]="formRoom.invalid">
+          <nz-icon nzType="plus"></nz-icon> Agregar
+        </button>
+      </nz-form-item>
+    </form>
+    <nz-divider></nz-divider>
+    <nz-table
+      #basicTable
+      [nzData]="rooms"
+      [nzBordered]="true"
+      [nzFrontPagination]="false"
+      [nzScroll]="{ y: '240px' }"
+    >
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Precio</th>
+          <th>Mantenimiento</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (room of rooms; track $index) {
+        <tr>
+          <td>{{ room.number }}</td>
+          <td>{{ room.basePrice }}</td>
+          <td>{{ room.maintenanceCost }}</td>
+          <td>
+            <button
+              nz-button
+              nzType="primary"
+              nzDanger
+              nzShape="circle"
+              (click)="removeRoom($index)"
+            >
+              <nz-icon nzType="delete" />
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </nz-table>
+  </div>
+  }
+</div>
+
+<!--Botones-->
+<div *nzModalFooter>
+  <div class="steps-action">
+    @if (current > 0) {
+    <button nz-button nzType="default" (click)="pre()"><span>Ant</span></button>
+    } @if (current < 1) {
+    <button nz-button nzType="default" (click)="next()">
+      <span>Sig</span>
+    </button>
+    } @if (current === 1) {
+    <button nz-button nzType="primary" (click)="onSubmit()">
+      <nz-icon nzType="plus"></nz-icon> Guardar Hotel
+    </button>
+    }
+  </div>
+</div>

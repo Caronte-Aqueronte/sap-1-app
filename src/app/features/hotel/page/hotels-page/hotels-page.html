@@ -1,0 +1,40 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>Hoteles</nz-page-header-title>
+  <nz-page-header-subtitle
+    >Gestión de hoteles registrados</nz-page-header-subtitle
+  >
+  <nz-page-header-extra>
+    <nz-space>
+      <button *nzSpaceItem nz-button nzType="default" (click)="onCreateHotel()">
+        <nz-icon nzType="plus"></nz-icon> Nuevo hotel
+      </button>
+    </nz-space>
+  </nz-page-header-extra>
+</nz-page-header>
+
+<nz-table #basicTable [nzData]="hotels">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Teléfono</th>
+      <th>Estrellas</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of basicTable.data; track data) {
+    <tr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.address }}</td>
+      <td>{{ data.phoneNumber }}</td>
+      <td>{{ data.stars }}</td>
+      <td>
+        <button nz-button nzType="primary" nzShape="circle">
+          <nz-icon nzType="edit" />
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</nz-table>
