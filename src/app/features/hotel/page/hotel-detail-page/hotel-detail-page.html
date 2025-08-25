@@ -1,0 +1,110 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>
+    @if (hotel) {
+    <nz-page-header-title>
+      {{ hotel.name }}
+    </nz-page-header-title>
+    } @else {
+    <nz-page-header-title> Detalle del Hotel </nz-page-header-title>
+    }
+  </nz-page-header-title>
+</nz-page-header>
+
+<!-- Informacion del hotel -->
+<div class="mt-4">
+  @if (hotel) {
+  <div class="bg-white shadow rounded-lg p-6 border border-gray-200">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">
+      Información del hotel
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+      <!-- Nombre -->
+      <div>
+        <p class="text-sm font-medium text-gray-500">Nombre</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ hotel.name }}
+        </p>
+      </div>
+
+      <!-- Dirección -->
+      <div>
+        <p class="text-sm font-medium text-gray-500">Dirección</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ hotel.address }}
+        </p>
+      </div>
+
+      <!-- Teléfono -->
+      <div>
+        <p class="text-sm font-medium text-gray-500">Teléfono</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ hotel.phoneNumber }}
+        </p>
+      </div>
+
+      <!-- Estrellas -->
+      <div>
+        <p class="text-sm font-medium text-gray-500">Estrellas</p>
+        <div class="flex items-center gap-1 text-yellow-500">
+          @for (star of [].constructor(hotel.stars); track $index) {
+          <nz-icon nzType="star" nzTheme="fill" class="w-5 h-5"></nz-icon>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+<!-- Divider -->
+<nz-divider nzText="Habitaciones"></nz-divider>
+
+<!-- Botón de nueva habitación -->
+<div class="flex justify-end mb-3">
+  <button nz-button nzType="default" (click)="onCreateRoom()">
+    <nz-icon nzType="plus"></nz-icon> Nueva habitación
+  </button>
+</div>
+
+<nz-table #basicTable [nzData]="rooms" [nzPageSize]="10">
+  <thead>
+    <tr>
+      <th>Numero de Hab</th>
+      <th>Precio base</th>
+      <th>Costo Mantenimiento</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of basicTable.data; track data) {
+    <tr>
+      <td>{{ data.number }}</td>
+      <td>{{ data.basePrice }}</td>
+      <td>{{ data.maintenanceCost }}</td>
+      <td>
+        <div
+          class="px-3 py-1 rounded-full text-white text-sm font-semibold text-center w-32"
+          [ngClass]="statusMap[data.status].color"
+        >
+          {{ statusMap[data.status].text }}
+        </div>
+      </td>
+
+      <td>
+        <div class="flex gap-2">
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="circle"
+            (click)="onUpdateRoom(data)"
+          >
+            <nz-icon nzType="edit"></nz-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</nz-table>

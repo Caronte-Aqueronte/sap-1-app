@@ -1,0 +1,77 @@
+<div class="steps-content">
+
+  <!-- Paso 1: Info del hotel -->
+  <form nz-form [nzLayout]="'vertical'" [formGroup]="formHotel" class="w-full">
+    <!-- Nombre -->
+    <nz-form-item>
+      <nz-form-control nzErrorTip="El nombre es obligatorio (2-100 caracteres)">
+        <nz-input-group nzPrefixIcon="home">
+          <input
+            formControlName="name"
+            nz-input
+            placeholder="Nombre del hotel"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Dirección -->
+    <nz-form-item>
+      <nz-form-control
+        nzErrorTip="La dirección es obligatoria (5-200 caracteres)"
+      >
+        <nz-input-group nzPrefixIcon="environment">
+          <input
+            formControlName="address"
+            nz-input
+            placeholder="Dirección"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Teléfono -->
+    <nz-form-item>
+      <nz-form-control
+        nzErrorTip="Ingrese un número de teléfono válido (máx 30)"
+      >
+        <nz-input-group nzPrefixIcon="phone">
+          <input
+            formControlName="phoneNumber"
+            nz-input
+            placeholder="Teléfono"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Estrellas -->
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Debe estar entre 1 y 5 estrellas">
+        <nz-input-group nzPrefixIcon="star">
+          <input
+            type="number"
+            formControlName="stars"
+            nz-input
+            placeholder="Estrellas"
+            min="1"
+            max="5"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+
+</div>
+
+<!--Botones-->
+<div *nzModalFooter>
+  <button nz-button nzType="primary" (click)="onSubmit()">
+    <nz-icon nzType="edit"></nz-icon> Actualizar Hotel
+  </button>
+</div>

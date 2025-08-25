@@ -5,5 +5,5 @@ export interface CreateHotelRequestDTO {
   address: string;
   phoneNumber: string;
   stars: number;
-  rooms: CreateRoomRequestDTO[];
+  rooms: CreateRoomRequestDTO[] | null;
 }
