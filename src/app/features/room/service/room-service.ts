@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Room } from '../model/Room';
 import { HttpClient } from '@angular/common/http';
-import { CreateRoomRequestDTO } from '../model/CreateRoomRequestDTO';
+import { CreateRoomRequestDTO as SaveRoomRequestDTO } from '../model/CreateRoomRequestDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,34 @@ export class RoomService {
    * @param roomRequest objeto con los datos de la habitación a crear
    * @returns Observable<void> indicando el resultado de la operación
    */
-  createRoom(hotelId: string, roomRequest: CreateRoomRequestDTO): Observable<void> {
+  createRoom(
+    hotelId: string,
+    roomRequest: SaveRoomRequestDTO
+  ): Observable<void> {
     return this.http.post<void>(`${this.path}/${hotelId}`, roomRequest);
+  }
+
+  /**
+   * Edita la información de una habitación existente.
+   *
+   * @param roomRequest objeto con los datos de la habitación a actualizar
+   * @returns Observable<void> indicando el resultado de la operación
+   */
+  editRoom(roomId: String, roomRequest: SaveRoomRequestDTO): Observable<void> {
+    return this.http.patch<void>(`${this.path}/${roomId}`, roomRequest);
+  }
+
+  /**
+   * Alterna el estado de mantenimiento de una habitación.
+   * Cambia entre AVAILABLE y MAINTENANCE, si la habitación no está OCCUPIED.
+   *
+   * @param roomId identificador único de la habitación
+   * @returns Observable<void> indicando el resultado de la operación
+   */
+  toggleMaintenanceStatus(roomId: string): Observable<void> {
+    return this.http.patch<void>(
+      `${this.path}/toggle-maintenance-status/${roomId}`,
+      {}
+    );
   }
 }

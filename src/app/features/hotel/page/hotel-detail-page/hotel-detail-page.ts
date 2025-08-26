@@ -15,6 +15,8 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { CommonModule } from '@angular/common';
 import { CreateRoomForm } from '../../../room/page/create-room-form/create-room-form';
+import { EditRoomForm } from '../../../room/page/edit-room-form/edit-room-form';
+import { RoomStatus } from '../../../room/model/RoomStatus';
 
 @Component({
   selector: 'app-hotel-detail-page',
@@ -37,11 +39,6 @@ export class HotelDetailPage {
     OCCUPIED: { text: 'Ocupado', color: 'bg-red-500' },
     MAINTENANCE: { text: 'Mantenimiento', color: 'bg-yellow-500' },
   };
-
-  onUpdateRoom(_t41: Room) {
-    throw new Error('Method not implemented.');
-  }
-
   hotel!: Hotel;
   rooms: Room[] = [];
   constructor(
@@ -105,4 +102,53 @@ export class HotelDetailPage {
       }
     });
   }
+
+  /**
+   * Abre un modal para editar la información de una habitación.
+   */
+  onUpdateRoom(room: Room) {
+    const modal = this.modalService.create({
+      nzTitle: 'Editar Habitación',
+      nzContent: EditRoomForm,
+      nzData: {
+        room: room, // se pasa el hotel como input
+      },
+      nzCentered: true,
+    });
+
+    //espera a que se cierre el modal, si se lanza un sicces entonces manda a traer todos los hoteles
+    modal.afterClose.subscribe((result) => {
+      if (result) {
+        this.getRoomsByHotelId();
+      }
+    });
+  }
+
+    /**
+   * Cambia el estado de una habitación entre Disponible y Mantenimiento.
+   * 
+   * @param room habitación seleccionada
+   */
+  onToggleMaintenance(room: Room): void {
+    // si está ocupada no permitimos cambiar a mantenimiento
+    if (room.status === RoomStatus.OCCUPIED) {
+      this.toastr.error(
+        `La habitación ${room.number} está ocupada y no puede cambiar a mantenimiento`
+      );
+      return;
+    }
+
+    this.roomService.toggleMaintenanceStatus(room.id).subscribe({
+      next: () => {
+        this.toastr.success(
+          `La habitación ${room.number} cambió de estado`
+        );
+        this.getRoomsByHotelId(); // refresca lista
+      },
+      error: (err) => {
+        this.toastr.error(this.errorRender.render(err.error));
+      },
+    });
+  }
+
 }
