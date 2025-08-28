@@ -13,7 +13,7 @@ import { CreateRoomRequestDTO } from '../../model/CreateRoomRequestDTO';
 import { RoomService } from '../../service/room-service';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorRenderService } from '../../../../core/services/error-render-service';
-import { Hotel } from '../../../../core/model/establishment/Hotel';
+import { Hotel } from '../../../hotel/model/Hotel';
 import { Room } from '../../model/Room';
 
 @Component({

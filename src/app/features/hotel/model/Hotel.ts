@@ -1,5 +1,5 @@
-import { Establishment } from './Establishment';
-import { EstablishmentType } from './EstablishmentType ';
+import { Establishment } from '../../../core/model/establishment/Establishment';
+import { EstablishmentType } from '../../../core/model/establishment/EstablishmentType ';
 
 /**
  * entidad que representa un hotel en el sistema

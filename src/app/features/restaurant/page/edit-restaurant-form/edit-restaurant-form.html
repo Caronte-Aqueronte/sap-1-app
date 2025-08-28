@@ -1,7 +1,11 @@
 <div class="steps-content">
-
-  <!-- Paso 1: Info del hotel -->
-  <form nz-form [nzLayout]="'vertical'" [formGroup]="formHotel" class="w-full">
+  <!-- Paso 1: Info del restaurante -->
+  <form
+    nz-form
+    [nzLayout]="'vertical'"
+    [formGroup]="formRestaurant"
+    class="w-full"
+  >
     <!-- Nombre -->
     <nz-form-item>
       <nz-form-control nzErrorTip="El nombre es obligatorio (2-100 caracteres)">
@@ -9,7 +13,7 @@
           <input
             formControlName="name"
             nz-input
-            placeholder="Nombre del hotel"
+            placeholder="Nombre del restaurante"
             class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
           />
         </nz-input-group>
@@ -48,30 +52,29 @@
       </nz-form-control>
     </nz-form-item>
 
-    <!-- Estrellas -->
+    <!-- Hotel (opcional) -->
     <nz-form-item>
-      <nz-form-control nzErrorTip="Debe estar entre 1 y 5 estrellas">
-        <nz-input-group nzPrefixIcon="star">
-          <input
-            type="number"
-            formControlName="stars"
-            nz-input
-            placeholder="Estrellas"
-            min="1"
-            max="5"
-            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
-          />
-        </nz-input-group>
+      <nz-form-control>
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Seleccione un hotel (opcional)"
+          formControlName="hotelId"
+        >
+          @for (hotel of hotels; track $index) {
+          <nz-option [nzValue]="hotel.id" [nzLabel]="hotel.name"> </nz-option>
+          }
+        </nz-select>
       </nz-form-control>
     </nz-form-item>
   </form>
-
-
 </div>
 
 <!--Botones-->
 <div *nzModalFooter>
-  <button nz-button nzType="primary" (click)="onSubmit()"  [disabled]="formHotel.invalid">
-    <nz-icon nzType="edit"></nz-icon> Actualizar Hotel
-  </button>
+  <div class="steps-action">
+    <button nz-button nzType="primary" (click)="onSubmit()">
+      <nz-icon nzType="edit"></nz-icon> Editar Hotel
+    </button>
+  </div>
 </div>

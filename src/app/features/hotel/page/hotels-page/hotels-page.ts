@@ -8,7 +8,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { CreateHotelForm } from '../create-hotel-form/create-hotel-form';
-import { Hotel } from '../../../../core/model/establishment/Hotel';
+import { Hotel } from '../../model/Hotel';
 import { HotelService } from '../../service/hotel-service';
 import { EditHotelForm } from '../edit-hotel-form/edit-hotel-form';
 import { Router } from '@angular/router';

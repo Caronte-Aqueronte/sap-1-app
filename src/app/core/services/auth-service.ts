@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LoginRequestDTO } from '../model/login/LoginRequestDTO';
-import { LoginResponseDTO } from '../model/login/LoginResponseDTO';
+import { LoginRequestDTO } from '../../features/login/model/LoginRequestDTO';
+import { LoginResponseDTO } from '../../features/login/model/LoginResponseDTO';
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',

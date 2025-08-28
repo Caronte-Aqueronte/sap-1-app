@@ -10,8 +10,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { ToastrService } from 'ngx-toastr';
-import { LoginRequestDTO } from '../../../../core/model/login/LoginRequestDTO';
-import { LoginResponseDTO } from '../../../../core/model/login/LoginResponseDTO';
+import { LoginRequestDTO } from '../../model/LoginRequestDTO';
+import { LoginResponseDTO } from '../../model/LoginResponseDTO';
 import { AuthService } from '../../../../core/services/auth-service';
 import { ErrorRenderService } from '../../../../core/services/error-render-service';
 

@@ -1,5 +1,5 @@
 import { RoomStatus } from './RoomStatus';
-import { Hotel } from '../../../core/model/establishment/Hotel';
+import { Hotel } from '../../hotel/model/Hotel';
 
 /**
 Representa una habitacion en el sistema

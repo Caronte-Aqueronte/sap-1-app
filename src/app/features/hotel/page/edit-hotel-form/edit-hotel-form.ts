@@ -14,7 +14,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Hotel } from '../../../../core/model/establishment/Hotel';
+import { Hotel } from '../../model/Hotel';
 @Component({
   selector: 'app-edit-hotel-form',
   imports: [

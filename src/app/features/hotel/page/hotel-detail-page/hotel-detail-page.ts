@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { Hotel } from '../../../../core/model/establishment/Hotel';
+import { Hotel } from '../../model/Hotel';
 import { ActivatedRoute } from '@angular/router';
 import { HotelService } from '../../service/hotel-service';
 import { ErrorRenderService } from '../../../../core/services/error-render-service';
@@ -62,7 +62,10 @@ export class HotelDetailPage {
   private getHotelById() {
     const id = this.route.snapshot.paramMap.get('id')!; //obteiene id de la ruta
     this.hotelService.getHotelById(id).subscribe({
-      next: (hotel: Hotel) => (this.hotel = hotel),
+      next: (hotel: Hotel) => {
+        this.hotel = hotel;
+        this.cdr.detectChanges();
+      },
       error: (err) => this.toastr.error(this.errorRender.render(err.error)),
     });
   }
@@ -124,9 +127,9 @@ export class HotelDetailPage {
     });
   }
 
-    /**
+  /**
    * Cambia el estado de una habitación entre Disponible y Mantenimiento.
-   * 
+   *
    * @param room habitación seleccionada
    */
   onToggleMaintenance(room: Room): void {
@@ -140,9 +143,7 @@ export class HotelDetailPage {
 
     this.roomService.toggleMaintenanceStatus(room.id).subscribe({
       next: () => {
-        this.toastr.success(
-          `La habitación ${room.number} cambió de estado`
-        );
+        this.toastr.success(`La habitación ${room.number} cambió de estado`);
         this.getRoomsByHotelId(); // refresca lista
       },
       error: (err) => {
@@ -150,5 +151,4 @@ export class HotelDetailPage {
       },
     });
   }
-
 }

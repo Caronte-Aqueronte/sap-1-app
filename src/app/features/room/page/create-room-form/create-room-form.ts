@@ -12,7 +12,7 @@ import { NZ_MODAL_DATA, NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorRenderService } from '../../../../core/services/error-render-service';
 import { RoomService } from '../../service/room-service';
-import { Hotel } from '../../../../core/model/establishment/Hotel';
+import { Hotel } from '../../../hotel/model/Hotel';
 import { CreateRoomRequestDTO } from '../../model/CreateRoomRequestDTO';
 
 @Component({

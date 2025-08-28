@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { CreateHotelRequestDTO as SaveHotelRequestDTO } from '../model/CreateHotelRequestDTO';
 import { Observable } from 'rxjs';
-import { Hotel } from '../../../core/model/establishment/Hotel';
+import { Hotel } from '../model/Hotel';
 
 @Injectable({
   providedIn: 'root',
