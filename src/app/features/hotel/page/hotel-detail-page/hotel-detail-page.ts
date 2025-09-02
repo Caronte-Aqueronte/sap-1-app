@@ -35,9 +35,8 @@ import { RoomStatus } from '../../../room/model/RoomStatus';
 })
 export class HotelDetailPage {
   statusMap: Record<string, { text: string; color: string }> = {
-    AVAILABLE: { text: 'Disponible', color: 'bg-green-500' },
-    OCCUPIED: { text: 'Ocupado', color: 'bg-red-500' },
-    MAINTENANCE: { text: 'Mantenimiento', color: 'bg-yellow-500' },
+    ACTIVE: { text: 'Activa', color: 'bg-green-500' },
+    INACTIVE: { text: 'Inactiva', color: 'bg-red-500' },
   };
   hotel!: Hotel;
   rooms: Room[] = [];
@@ -132,15 +131,8 @@ export class HotelDetailPage {
    *
    * @param room habitación seleccionada
    */
-  onToggleMaintenance(room: Room): void {
+  onToggleStatus(room: Room): void {
     // si está ocupada no permitimos cambiar a mantenimiento
-    if (room.status === RoomStatus.OCCUPIED) {
-      this.toastr.error(
-        `La habitación ${room.number} está ocupada y no puede cambiar a mantenimiento`
-      );
-      return;
-    }
-
     this.roomService.toggleMaintenanceStatus(room.id).subscribe({
       next: () => {
         this.toastr.success(`La habitación ${room.number} cambió de estado`);
