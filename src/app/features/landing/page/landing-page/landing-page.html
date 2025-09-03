@@ -1,4 +1,30 @@
 <div class="min-h-screen flex flex-col">
+  <header class="sticky top-0 left-0 right-0 z-50 bg-[#012e5c] text-white">
+    <div
+      class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+    >
+      <div class="flex items-center gap-3">
+        <button nz-button nzType="primary" nzSize="large" (click)="goLogin()">
+          <nz-icon nzType="user" />
+          Ingresar
+        </button>
+
+        <button nz-button nzType="link" nzSize="large" (click)="goHotels()">
+          <nz-icon nzType="home" />
+          Nuestros Hoteles
+        </button>
+
+        <button nz-button nzType="link" nzSize="large" (click)="goLogin()">
+          <nz-icon nzType="appstore" />
+          Nuestros Restaurantes
+        </button>
+      </div>
+      <div class="flex items-center gap-3">
+        <img src="/img/logo2.png" alt="Comer y Dormir" class="h-8" />
+      </div>
+    </div>
+  </header>
+
   <!-- contenido dinámico -->
   <main class="flex-1">
     <router-outlet></router-outlet>

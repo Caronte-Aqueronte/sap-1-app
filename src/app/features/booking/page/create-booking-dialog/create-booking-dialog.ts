@@ -198,8 +198,6 @@ export class CreateBookingDialog {
         this.modal.destroy({ success: true });
       },
       error: (err) => {
-        console.log(err);
-
         this.toastr.error(this.errorRender.render(err));
       },
     });

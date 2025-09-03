@@ -1,0 +1,22 @@
+<div
+  class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col gap-3 transition hover:shadow-xl hover:-translate-y-1"
+>
+  <div class="flex items-center justify-between">
+    <div class="text-xl font-bold text-[#012e5c]">{{ hotel.name }}</div>
+    <div class="flex items-center gap-1 text-[#fb9120]">
+      <nz-icon nzType="star" nzTheme="fill"></nz-icon>
+      <span class="font-semibold">{{ hotel.stars }}</span>
+    </div>
+  </div>
+
+  <div class="text-sm text-gray-600">
+    <nz-icon nzType="environment" nzTheme="outline" class="mr-1"></nz-icon>
+    {{ hotel.address }}  {{ hotel.phoneNumber }}
+  </div>
+
+  <div class="mt-2 flex justify-end">
+    <button nz-button nzType="primary" (click)="onExplore()">
+      Explorar habitaciones
+    </button>
+  </div>
+</div>

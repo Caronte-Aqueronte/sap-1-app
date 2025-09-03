@@ -10,6 +10,9 @@ import { RestaurantPage } from './features/restaurant/page/restaurant-page/resta
 import { SearchResultsComponent } from './features/booking/page/search-results-component/search-results-component';
 import { RoomBookingDetail } from './features/booking/page/room-booking-detail/room-booking-detail';
 import { InfoSection } from './features/landing/component/info-section/info-section';
+import { HotelsExplorePage } from './features/hotel/page/hotels-explore-page/hotels-explore-page';
+import { HotelRoomsPage } from './features/hotel/page/hotel-rooms-page/hotel-rooms-page';
+import { RoomDetailPage } from './features/room/page/room-detail-page/room-detail-page';
 
 export const routes: Routes = [
   {
@@ -23,6 +26,9 @@ export const routes: Routes = [
     children: [
       { path: 'search-results', component: SearchResultsComponent },
       { path: 'room-booking-detail/:id', component: RoomBookingDetail },
+      { path: 'hotels-explore', component: HotelsExplorePage },
+      { path: 'hotel/:id/rooms', component: HotelRoomsPage },
+      { path: 'room-detail/:id', component: RoomDetailPage },
       { path: 'info-section', component: InfoSection },
       { path: '', redirectTo: 'info-section', pathMatch: 'full' },
     ],

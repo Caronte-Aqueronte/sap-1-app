@@ -23,6 +23,16 @@ export class RoomService {
   }
 
   /**
+   * Obtiene todas las habitaciones activas asociadas a un hotel específico.
+   *
+   * @param id identificador único del hotel
+   * @returns Observable<Room[]> con la lista de habitaciones del hotel
+   */
+  getActiveoomsByHotelId(id: string): Observable<Room[]> {
+    return this.http.get<Room[]>(`${this.path}/active-rooms/${id}`);
+  }
+
+  /**
    * Crea una nueva habitación en un hotel específico.
    *
    * @param hotelId identificador único del hotel

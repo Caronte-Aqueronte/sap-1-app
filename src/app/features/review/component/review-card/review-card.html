@@ -4,12 +4,20 @@
       <nz-rate [ngModel]="review.rating" [nzDisabled]="true"></nz-rate>
     </div>
     <div class="grow">
-      <!-- fecha -->
+      <!-- encabezado con fecha y nombre del cliente -->
       <div class="flex items-center justify-between mb-1">
         <span class="text-sm text-gray-500 italic">
           {{ review.createdAt }}
         </span>
+
+        @if (client) {
+        <span class="text-sm font-semibold text-[#012e5c]">
+          {{ client.firstName }} {{ client.lastName }}
+        </span>
+        }
       </div>
+
+      <!-- comentario -->
       @if (review.comment) {
       <p class="m-0 text-gray-800">
         {{ review.comment }}

@@ -8,7 +8,7 @@ import { ErrorRenderService } from '../../../../core/services/error-render-servi
 import { Hotel } from '../../../hotel/model/Hotel';
 import { Room } from '../../../room/model/Room';
 import { RoomService } from '../../../room/service/room-service';
-import { RoomBookingCard } from '../../../landing/component/room-booking-card/room-booking-card';
+import { RoomBookingCard } from '../../component/room-booking-card/room-booking-card';
 import { CommonModule, formatDate } from '@angular/common';
 import { HotelService } from '../../../hotel/service/hotel-service';
 

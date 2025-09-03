@@ -18,13 +18,9 @@
     <p class="text-2xl font-extrabold text-[#fb9120]">Q {{ room.basePrice }}</p>
   </div>
 
-  <!-- Boton -->
-  <button
-    type="button"
-    class="mt-auto flex w-full items-center justify-center gap-2 rounded-xl bg-[#fb9120] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-90 hover:shadow-lg"
-    (click)="onReserve()"
-  >
-    <nz-icon nzType="calendar" nzTheme="outline"></nz-icon>
-    Reservar ahora
-  </button>
+  <div class="mt-2 flex justify-end">
+    <button nz-button nzType="primary" (click)="onViewDetails()">
+      Ver detalles
+    </button>
+  </div>
 </div>

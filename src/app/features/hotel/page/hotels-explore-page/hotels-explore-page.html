@@ -1,0 +1,19 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>Explorar Hoteles</nz-page-header-title>
+  <nz-page-header-subtitle
+    >Selecciona un hotel para ver sus habitaciones</nz-page-header-subtitle
+  >
+</nz-page-header>
+
+<div
+  class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 p-10"
+>
+  @for (hotel of hotels; track hotel) {
+  <app-hotel-card
+    [hotel]="hotel"
+    (explore)="goToHotelRooms(hotel)"
+  ></app-hotel-card>
+  } @empty {
+  <div class="text-gray-600">No hay hoteles disponibles.</div>
+  }
+</div>

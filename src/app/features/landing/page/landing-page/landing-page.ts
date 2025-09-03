@@ -41,4 +41,8 @@ export class LandingPage {
   goLogin() {
     this.router.navigate(['/login']);
   }
+
+  goHotels() {
+    this.router.navigate(['/landing/hotels-explore']);
+  }
 }
