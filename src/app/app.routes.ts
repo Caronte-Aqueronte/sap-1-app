@@ -7,6 +7,9 @@ import { LandingPage } from './features/landing/page/landing-page/landing-page';
 import { LoginPage } from './features/login/page/login-page/login-page';
 import { RestaurantDetailPage } from './features/restaurant/page/restaurant-detail-page/restaurant-detail-page';
 import { RestaurantPage } from './features/restaurant/page/restaurant-page/restaurant-page';
+import { SearchResultsComponent } from './features/booking/page/search-results-component/search-results-component';
+import { RoomBookingDetail } from './features/booking/page/room-booking-detail/room-booking-detail';
+import { InfoSection } from './features/landing/component/info-section/info-section';
 
 export const routes: Routes = [
   {
@@ -17,11 +20,12 @@ export const routes: Routes = [
   {
     path: 'landing',
     component: LandingPage,
-  },
-  {
-    path: '',
-    redirectTo: 'landing',
-    pathMatch: 'full',
+    children: [
+      { path: 'search-results', component: SearchResultsComponent },
+      { path: 'room-booking-detail/:id', component: RoomBookingDetail },
+      { path: 'info-section', component: InfoSection },
+      { path: '', redirectTo: 'info-section', pathMatch: 'full' },
+    ],
   },
 
   {
@@ -44,8 +48,14 @@ export const routes: Routes = [
       { path: 'staff', component: StaffDashBoard },
     ],
   },
+
+  {
+    path: '',
+    redirectTo: 'landing',
+    pathMatch: 'full',
+  },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'landing',
   },
 ];

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -11,7 +11,10 @@ import {
 } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { Hotel } from '../../../hotel/model/Hotel';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { HotelService } from '../../../hotel/service/hotel-service';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-landing-page',
   imports: [
@@ -22,26 +25,20 @@ import { Router } from '@angular/router';
     NzButtonModule,
     ReactiveFormsModule,
     NzFormModule,
+    RouterOutlet,
   ],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.css',
 })
 export class LandingPage {
-  hotels: Hotel[] = [];
+  constructor(
+    private router: Router,
+    private hotelService: HotelService,
+    private cdr: ChangeDetectorRef,
+    private toastrService: ToastrService
+  ) {}
 
-  private fb = inject(NonNullableFormBuilder);
-
-  bookingSearchForm = this.fb.group({
-    hotel: [null, [Validators.required]],
-    checkIn: [null, [Validators.required]],
-    checkOut: [null, [Validators.required]],
-  });
-
-  constructor(private router: Router) {}
   goLogin() {
     this.router.navigate(['/login']);
-  }
-  search() {
-    throw new Error('Method not implemented.');
   }
 }

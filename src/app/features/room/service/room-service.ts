@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Room } from '../model/Room';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { CreateRoomRequestDTO as SaveRoomRequestDTO } from '../model/CreateRoomRequestDTO';
 
 @Injectable({
@@ -58,5 +58,37 @@ export class RoomService {
       `${this.path}/toggle-maintenance-status/${roomId}`,
       {}
     );
+  }
+
+  /**
+   * Obtiene habitaciones disponibles de un hotel en un rango de fechas
+   * @param hotelId id del hotel
+   * @param checkIn fecha de inicio
+   * @param checkOut fecha de fin
+   * @returns Observable con la lista de habitaciones
+   */
+  searchAvailableRooms(
+    hotelId: string,
+    checkIn: string,
+    checkOut: string
+  ): Observable<Room[]> {
+    const params = new HttpParams()
+      .set('startDate', checkIn)
+      .set('endDate', checkOut);
+
+    return this.http.get<any[]>(`${this.path}/available-rooms/${hotelId}`, {
+      params,
+    });
+  }
+
+  /**
+   * Obtiene una habitación activa por su ID.
+   * Si la habitación existe pero está inactiva, el backend devolverá un error.
+   *
+   * @param roomId identificador único de la habitación
+   * @returns Observable<Room> con la información de la habitación activa
+   */
+  getActiveRoomById(roomId: string): Observable<Room> {
+    return this.http.get<Room>(`${this.path}/active-room/${roomId}`);
   }
 }
