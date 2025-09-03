@@ -38,6 +38,9 @@ export class LandingPage {
     private toastrService: ToastrService
   ) {}
 
+  goBookings() {
+    this.router.navigate(['/landing']);
+  }
   goLogin() {
     this.router.navigate(['/login']);
   }

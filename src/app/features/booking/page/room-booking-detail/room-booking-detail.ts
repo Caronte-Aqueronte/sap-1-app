@@ -24,6 +24,7 @@ import { Room } from '../../../room/model/Room';
 import { RoomService } from '../../../room/service/room-service';
 import { formatDate } from '@angular/common';
 import { differenceInDays } from 'date-fns';
+import { ReviewListSection } from "../../../review/component/review-list-section/review-list-section";
 @Component({
   selector: 'app-room-booking-detail',
   imports: [
@@ -35,9 +36,9 @@ import { differenceInDays } from 'date-fns';
     ReactiveFormsModule,
     NzFormModule,
     NzRateModule,
-    ReviewCard,
     NzModalModule,
-  ],
+    ReviewListSection
+],
   templateUrl: './room-booking-detail.html',
   styleUrl: './room-booking-detail.css',
 })
@@ -109,7 +110,6 @@ export class RoomBookingDetail implements OnInit {
     this.roomService.getActiveRoomById(roomId).subscribe({
       next: (room: Room) => {
         this.room = room;
-        this.getReviewsByTarget(this.room.id);
         this.computeTotals();
         this.cdr.detectChanges();
       },
@@ -142,52 +142,6 @@ export class RoomBookingDetail implements OnInit {
    */
   private calculateNights(checkIn: string, checkOut: string): number {
     return differenceInDays(new Date(checkOut), new Date(checkIn));
-  }
-
-  submitComment() {
-    if (!this.room) {
-      this.toastr.error('No hay habitación cargada para reseñar');
-      return;
-    }
-
-    if (this.commentForm.invalid) {
-      this.toastr.warning('Debes seleccionar una valoración antes de enviar');
-      return;
-    }
-
-    const dto: CreateReviewRequestDTO = {
-      targetId: this.room.id,
-      rating: this.commentForm.value.rating!,
-      comment: this.commentForm.value.comment || undefined,
-    };
-
-    this.reviewService.createRoomReview(dto).subscribe({
-      next: () => {
-        this.toastr.success('¡Reseña enviada con éxito!');
-        this.commentForm.reset(); // limpia el formulario
-        this.getReviewsByTarget(this.room.id); //trae las rev de nuevo
-      },
-      error: (err) => {
-        this.toastr.error(this.errorRender.render(err.error));
-      },
-    });
-  }
-
-  /**
-   * Obtiene todas las reseñas asociadas a un target específico.
-   *
-   * @param targetId identificador único del recurso reseñado
-   */
-  getReviewsByTarget(targetId: string) {
-    this.reviewService.getReviewsByTarget(targetId).subscribe({
-      next: (reviews) => {
-        this.reviews = reviews;
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        this.toastr.error(this.errorRender.render(err.error));
-      },
-    });
   }
 
   /**

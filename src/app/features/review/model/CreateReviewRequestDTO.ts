@@ -5,4 +5,5 @@ export interface CreateReviewRequestDTO {
   targetId: string;
   rating: number;
   comment?: string;
+  nationalId: string;
 }

@@ -111,68 +111,9 @@
   }
 </div>
 
-<!-- divider -->
-<div class="col-span-full">
-  <nz-divider nzText="Opiniones De Nuestros Clientes"></nz-divider>
-</div>
-
-<!-- lista de reseñas existentes -->
-<div class="mt-4 w-full md:w-[75vw] mx-auto">
-  @if (reviews.length === 0) {
-  <div class="text-gray-500 italic">Sé el primero en opinar.</div>
-  } @else {
-  <div class="grid grid-cols-1 max-h-[200px] overflow-y-auto pr-2">
-    @for (review of reviews; track review.id) {
-    <app-review-card [review]="review"></app-review-card>
-    }
-  </div>
-  }
-</div>
-
-<!-- sección de comentarios -->
-<div
-  class="mt-10 mb-10 bg-white shadow-lg rounded-2xl p-8 border border-gray-200 w-full md:w-[75vw] mx-auto"
->
-  <h3 class="text-xl font-bold text-[#012e5c] mb-6">Deja tu opinión</h3>
-
-  <form nz-form [formGroup]="commentForm" (ngSubmit)="submitComment()">
-    <!-- estrellas -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="4">Valoración</nz-form-label>
-      <nz-form-control [nzSpan]="20" nzErrorTip="Selecciona tu valoración">
-        <nz-rate formControlName="rating"></nz-rate>
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- comentario -->
-    <nz-form-item>
-      <nz-form-label [nzSpan]="4">Comentario</nz-form-label>
-      <nz-form-control
-        [nzSpan]="20"
-        nzErrorTip="El comentario no puede superar los 255 caracteres"
-      >
-        <textarea
-          nz-input
-          formControlName="comment"
-          rows="3"
-          placeholder="Escribe tu comentario (opcional)"
-          maxlength="255"
-        ></textarea>
-
-        <!-- contador -->
-        <div class="text-xs text-gray-500 mt-1 text-right">
-          {{ commentForm.get("comment")?.value?.length || 0 }}/255
-        </div>
-      </nz-form-control>
-    </nz-form-item>
-
-    <!-- botón enviar -->
-    <nz-form-item>
-      <nz-form-control [nzSpan]="24" class="flex justify-end">
-        <button nz-button nzType="primary" [disabled]="!commentForm.valid">
-          Enviar opinión
-        </button>
-      </nz-form-control>
-    </nz-form-item>
-  </form>
-</div>
+@if(room){
+<app-review-list-section
+  #reviewList
+  [targetId]="room.id"
+></app-review-list-section>
+}
