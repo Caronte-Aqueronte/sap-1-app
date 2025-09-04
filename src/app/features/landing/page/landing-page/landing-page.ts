@@ -48,4 +48,8 @@ export class LandingPage {
   goHotels() {
     this.router.navigate(['/landing/hotels-explore']);
   }
+
+  goRestaurants() {
+    this.router.navigate(['/landing/restaurants-explore']);
+  }
 }

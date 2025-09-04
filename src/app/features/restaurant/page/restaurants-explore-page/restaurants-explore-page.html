@@ -1,0 +1,14 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>Explorar Restaurantes</nz-page-header-title>
+  <nz-page-header-subtitle>Descubre nuestros restaurantes</nz-page-header-subtitle>
+</nz-page-header>
+
+<div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 p-6">
+  @for (restaurant of restaurants; track restaurant) {
+    <app-restaurant-card [restaurant]="restaurant" (view)="onView(restaurant)"></app-restaurant-card>
+  }
+  @empty {
+    <div class="text-gray-600">No hay restaurantes disponibles.</div>
+  }
+</div>
+

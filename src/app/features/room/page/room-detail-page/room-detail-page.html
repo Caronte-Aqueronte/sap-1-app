@@ -40,6 +40,7 @@
 
 <app-review-comment-form
   [targetId]="room.id"
+  [targetType]="'room'"
   (submitted)="reviewList.refresh()"
 ></app-review-comment-form>
 }

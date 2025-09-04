@@ -24,6 +24,16 @@ export class ReviewService {
   }
 
   /**
+   * Crea una reseña de restaurante
+   *
+   * @param review objeto con la información de la reseña
+   * @returns Observable<void> indicando el resultado de la operación
+   */
+  createRestaurantReview(review: CreateReviewRequestDTO): Observable<void> {
+    return this.http.post<void>(`${this.path}/restaurants`, review);
+  }
+
+  /**
    * Obtiene todas las reseñas asociadas a un target específico
    *
    * @param targetId identificador único del recurso reseñado

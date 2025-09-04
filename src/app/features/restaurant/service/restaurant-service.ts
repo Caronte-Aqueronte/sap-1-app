@@ -48,4 +48,13 @@ export class RestaurantService {
   public getRestaurantById(id: string): Observable<Restaurant> {
     return this.http.get<Restaurant>(`${this.path}/${id}`);
   }
+
+  /**
+   * obtiene la informacion de un restaurante publico por id
+   * @param id identificador del hotel
+   * @returns observable con el hotel encontrado
+   */
+  public getPublicRestaurantById(id: string): Observable<Restaurant> {
+    return this.http.get<Restaurant>(`${this.path}/public/by-id/${id}`);
+  }
 }

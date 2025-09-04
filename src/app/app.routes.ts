@@ -13,6 +13,8 @@ import { InfoSection } from './features/landing/component/info-section/info-sect
 import { HotelsExplorePage } from './features/hotel/page/hotels-explore-page/hotels-explore-page';
 import { HotelRoomsPage } from './features/hotel/page/hotel-rooms-page/hotel-rooms-page';
 import { RoomDetailPage } from './features/room/page/room-detail-page/room-detail-page';
+import { RestaurantsExplorePage } from './features/restaurant/page/restaurants-explore-page/restaurants-explore-page';
+import { RestaurantPublicDetailPage } from './features/restaurant/page/restaurant-public-detail-page/restaurant-public-detail-page';
 
 export const routes: Routes = [
   {
@@ -28,6 +30,8 @@ export const routes: Routes = [
       { path: 'room-booking-detail/:id', component: RoomBookingDetail },
       { path: 'hotels-explore', component: HotelsExplorePage },
       { path: 'hotel/:id/rooms', component: HotelRoomsPage },
+      { path: 'restaurants-explore', component: RestaurantsExplorePage },
+      { path: 'restaurant/:id/detail', component: RestaurantPublicDetailPage },
       { path: 'room-detail/:id', component: RoomDetailPage },
       { path: 'info-section', component: InfoSection },
       { path: '', redirectTo: 'info-section', pathMatch: 'full' },
