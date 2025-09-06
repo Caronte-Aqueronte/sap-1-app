@@ -17,6 +17,7 @@ import { CreateHotelRequestDTO } from '../../model/CreateHotelRequestDTO';
 import { HotelService } from '../../service/hotel-service';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { ErrorRenderService } from '../../../../core/services/error-render-service';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 @Component({
   selector: 'app-create-hotel-form',
   imports: [
@@ -29,6 +30,7 @@ import { ErrorRenderService } from '../../../../core/services/error-render-servi
     NzInputModule,
     NzFormModule,
     NzDividerModule,
+    NzInputNumberModule,
   ],
   templateUrl: './create-hotel-form.html',
   styleUrl: './create-hotel-form.css',
@@ -97,7 +99,6 @@ export class CreateHotelForm {
       },
     });
   }
-
 
   pre(): void {
     this.current -= 1;

@@ -1,0 +1,67 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>
+    Promociones de clientes frecuentes
+  </nz-page-header-title>
+  <nz-page-header-subtitle
+    >Gestión de promociones para clientes frecuentes</nz-page-header-subtitle
+  >
+  <nz-page-header-extra>
+    <nz-space>
+      <button
+        *nzSpaceItem
+        nz-button
+        nzType="default"
+        (click)="onCreatePromotion()"
+      >
+        <nz-icon nzType="plus"></nz-icon>
+        Nueva promoción
+      </button>
+    </nz-space>
+  </nz-page-header-extra>
+</nz-page-header>
+
+<nz-table #table [nzData]="promotions" [nzPageSize]="10">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>% Descuento</th>
+      <th>Visitas mínimas</th>
+      <th>Inicio</th>
+      <th>Fin</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of table.data; track data) {
+    <tr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.discountPercent }}%</td>
+      <td>{{ data.minVisits }}</td>
+      <td>{{ data.startDateStr }}</td>
+      <td>{{ data.endDateStr }}</td>
+      <td>
+        <div
+          class="px-3 py-1 rounded-full text-white text-sm font-semibold text-center w-32"
+          [ngClass]="data.isActive ? 'bg-green-500' : 'bg-red-500'"
+        >
+          {{ data.isActive ? "Activa" : "Inactiva" }}
+        </div>
+      </td>
+
+      <td>
+        <div class="flex gap-2">
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="circle"
+            (click)="onEditPromotion(data)"
+          >
+            <nz-icon nzType="edit"></nz-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</nz-table>

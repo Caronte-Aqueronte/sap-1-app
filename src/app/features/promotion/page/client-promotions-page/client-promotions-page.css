@@ -1,0 +1,13 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status.active {
+  background-color: #52c41a; /* green-6 */
+}
+
+.status.inactive {
+  background-color: #ff4d4f; /* red-5 */
+}
