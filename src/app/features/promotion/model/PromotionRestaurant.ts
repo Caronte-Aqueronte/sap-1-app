@@ -5,6 +5,6 @@ import { Promotion } from './Promotion';
  * Extiende de Promotion y agrega el identificador del restaurante.
  */
 export interface PromotionRestaurant extends Promotion {
-  restaurantId: string; // UUID
+  restaurantId: string;
+  restaurantName: string;
 }
-

@@ -7,11 +7,12 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NgClass } from '@angular/common';
 
-import { PromotionClient } from '../../../promotion/model/PromotionClient';
-import { PromotionClientService } from '../../../promotion/service/promotion-client-service';
-import { ErrorRenderService } from '../../../../core/services/error-render-service';
+import { PromotionClient } from '../../../model/PromotionClient';
+import { PromotionClientService } from '../../../service/promotion-client-service';
+import { ErrorRenderService } from '../../../../../core/services/error-render-service';
 import { ToastrService } from 'ngx-toastr';
 import { CreateClientPromotionForm } from '../create-client-promotion-form/create-client-promotion-form';
+import { EditClientPromotionForm } from '../edit-client-promotion-form/edit-client-promotion-form';
 
 @Component({
   selector: 'app-client-promotions-page',
@@ -72,8 +73,24 @@ export class ClientPromotionsPage implements OnInit {
     });
   }
 
+  /**
+   * Carga el dialog para la edicion de una promocion de cliente frecuente
+   * @param promo promocion a editar
+   */
   onEditPromotion(promo: PromotionClient): void {
-    console.log('Editar promoción', promo);
+    const modal = this.modalService.create({
+      nzTitle: 'Editar promoción de cliente frecuente',
+      nzContent: EditClientPromotionForm,
+      nzCentered: true,
+      nzData: {
+        promotion: promo, // se pasa el hotel como input
+      },
+    });
+    modal.afterClose.subscribe((result) => {
+      if (result) {
+        this.loadPromotions();
+      }
+    });
   }
 
   onViewPromotion(promo: PromotionClient): void {

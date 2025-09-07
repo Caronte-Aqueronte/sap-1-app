@@ -7,7 +7,6 @@ import { SavePromotionClientRequestDTO } from '../model/request/SavePromotionCli
 
 @Injectable({ providedIn: 'root' })
 export class PromotionClientService {
-
   private path = environment.apiUrl + '/v1/promotions-client';
 
   constructor(private http: HttpClient) {}
@@ -27,5 +26,17 @@ export class PromotionClientService {
    */
   public create(request: SavePromotionClientRequestDTO): Observable<void> {
     return this.http.post<void>(this.path, request);
+  }
+
+  /**
+   * edita promoción de cliente frecuente
+   * @param request request para mandar a crear
+   * @returns
+   */
+  public edit(
+    request: SavePromotionClientRequestDTO,
+    promotionId: string
+  ): Observable<void> {
+    return this.http.patch<void>(`${this.path}/${promotionId}`, request);
   }
 }

@@ -28,7 +28,7 @@ export class HotelService {
    * @returns Observable<Hotel[]> con la lista de hoteles registrados
    */
   public getAllHotels(): Observable<Hotel[]> {
-    return this.http.get<Hotel[]>(this.path);
+    return this.http.get<Hotel[]>(`${this.path}/public`);
   }
 
   /**
@@ -37,7 +37,7 @@ export class HotelService {
    * @returns Observable<Hotel[]> con la lista de hoteles registrados
    */
   public getHotelById(id: String): Observable<Hotel> {
-    return this.http.get<Hotel>(`${this.path}/${id}`);
+    return this.http.get<Hotel>(`${this.path}/public/${id}`);
   }
 
   /**

@@ -5,6 +5,8 @@ import { Promotion } from './Promotion';
  * Extiende de Promotion y agrega el identificador de la habitación.
  */
 export interface PromotionRoom extends Promotion {
-  roomId: string; // UUID
+  roomId: string;
+  hotelId: string;
+  roomName: string;
+  hotelName: string;
 }
-

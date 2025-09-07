@@ -8,6 +8,7 @@ import {
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CreateBookingRequestDTO } from '../model/CreateBookingRequestDTO';
+import { MostPopularRoom } from '../../room/model/MostPopularRoom';
 
 @Injectable({
   providedIn: 'root',
@@ -54,5 +55,15 @@ export class BookingService {
           return throwError(() => err);
         })
       );
+  }
+
+  /**
+   * Obtiene la habitación más popular de un hotel.
+   * @param hotelId identificador del hotel
+   */
+  getMostPopularRoom(hotelId: string): Observable<MostPopularRoom> {
+    return this.http.get<MostPopularRoom>(
+      `${this.path}/public/most-popular-room/${hotelId}`
+    );
   }
 }

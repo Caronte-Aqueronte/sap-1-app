@@ -17,7 +17,7 @@ export class RestaurantService {
    * obtiene todos los items de menu
    */
   public getAllRestaurants(): Observable<Restaurant[]> {
-    return this.http.get<Restaurant[]>(this.path);
+    return this.http.get<Restaurant[]>(`${this.path}/public`);
   }
 
   /**

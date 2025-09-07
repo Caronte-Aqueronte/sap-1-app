@@ -8,9 +8,10 @@ export interface Promotion {
   id: string;
   name: string;
   discountPercent: number;
-  startDateStr: string; // ISO date-time
-  endDateStr: string;   // ISO date-time
+  startDate: Date;
+  endDate: Date;
+  startDateStr: string;
+  endDateStr: string;
   isActive: boolean;
   promotionType: PromotionType;
 }
-

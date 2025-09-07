@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { CreateReviewRequestDTO } from '../model/CreateReviewRequestDTO';
 import { Observable } from 'rxjs';
 import { Review } from '../model/Review';
+import { RestaurantPopularity } from '../model/RestaurantPopularity';
 
 @Injectable({
   providedIn: 'root',
@@ -41,5 +42,15 @@ export class ReviewService {
    */
   getReviewsByTarget(targetId: string): Observable<Review[]> {
     return this.http.get<Review[]>(`${this.path}/by-target/${targetId}`);
+  }
+
+  /**
+   * Obtieneel restaurante mas popular
+   * @returns Observable<RestaurantPopularityResponseDTO> con la info de popularidad
+   */
+  getRestaurantMostPopular(): Observable<RestaurantPopularity> {
+    return this.http.get<RestaurantPopularity>(
+      `${this.path}/most-popular-restaurant`
+    );
   }
 }

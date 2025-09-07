@@ -4,17 +4,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
-import { ErrorRenderService } from '../../../../core/services/error-render-service';
-import { PromotionClientService } from '../../service/promotion-client-service';
-import { SavePromotionClientRequestDTO } from '../../model/request/SavePromotionClientRequestDTO';
-import { PromotionBaseForm } from '../../component/promotion-base-form/promotion-base-form';
+import { ErrorRenderService } from '../../../../../core/services/error-render-service';
+import { PromotionBaseForm } from '../../../component/promotion-base-form/promotion-base-form';
+import { SavePromotionClientRequestDTO } from '../../../model/request/SavePromotionClientRequestDTO';
+import { PromotionClientService } from '../../../service/promotion-client-service';
 
 @Component({
   selector: 'app-create-client-promotion-form',
@@ -83,7 +83,4 @@ export class CreateClientPromotionForm {
     });
   }
 
-  onCancel(): void {
-    this.modal.destroy(false);
-  }
 }
