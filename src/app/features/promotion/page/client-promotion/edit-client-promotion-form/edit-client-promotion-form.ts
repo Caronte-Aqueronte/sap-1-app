@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorRenderService } from '../../../../../core/services/error-render-service';
 import { PromotionClient } from '../../../model/PromotionClient';
 import { SavePromotionClientRequestDTO } from '../../../model/request/SavePromotionClientRequestDTO';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-edit-client-promotion-form',
@@ -72,12 +73,8 @@ export class EditClientPromotionForm implements OnInit {
     const request: SavePromotionClientRequestDTO = {
       name: formValue.name.trim(),
       discountPercent: formValue.discountPercent,
-      startDate: formValue.startDate
-        ? new Date(formValue.startDate).toISOString()
-        : '',
-      endDate: formValue.endDate
-        ? new Date(formValue.endDate).toISOString()
-        : '',
+      startDate: format(formValue.startDate!, "yyyy-MM-dd'T'HH:mm:ss"),
+      endDate: format(formValue.endDate!, "yyyy-MM-dd'T'HH:mm:ss"),
       minVisits: formValue.minVisits,
     };
 

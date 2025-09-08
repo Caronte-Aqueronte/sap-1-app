@@ -15,6 +15,7 @@ import { ErrorRenderService } from '../../../../../core/services/error-render-se
 import { PromotionBaseForm } from '../../../component/promotion-base-form/promotion-base-form';
 import { SavePromotionClientRequestDTO } from '../../../model/request/SavePromotionClientRequestDTO';
 import { PromotionClientService } from '../../../service/promotion-client-service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-create-client-promotion-form',
@@ -53,8 +54,6 @@ export class CreateClientPromotionForm {
   ) {}
 
   onSubmit(): void {
-
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.toastr.error('Formulario inválido, revisa los campos');
@@ -66,10 +65,11 @@ export class CreateClientPromotionForm {
     const request: SavePromotionClientRequestDTO = {
       name: formValue.name.trim(),
       discountPercent: formValue.discountPercent,
-      startDate: formValue.startDate!.toISOString(),
-      endDate: formValue.endDate!.toISOString(),
+      startDate: format(formValue.startDate!, "yyyy-MM-dd'T'HH:mm:ss"),
+      endDate: format(formValue.endDate!, "yyyy-MM-dd'T'HH:mm:ss"),
       minVisits: formValue.minVisits,
     };
+
 
     this.promotionClientService.create(request).subscribe({
       next: () => {
@@ -82,5 +82,4 @@ export class CreateClientPromotionForm {
       },
     });
   }
-
 }

@@ -18,6 +18,7 @@ import { SavePromotionRestaurantRequestDTO } from '../../../model/request/SavePr
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { format } from 'date-fns';
 @Component({
   selector: 'app-create-restaurant-promotion-form',
   standalone: true,
@@ -30,7 +31,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     NzIconModule,
     FormsModule,
     NzRateModule,
-    NzDividerModule
+    NzDividerModule,
   ],
   templateUrl: './create-restaurant-promotion-form.html',
 })
@@ -64,7 +65,7 @@ export class CreateRestaurantPromotionForm implements OnInit {
 
   private loadMostPopularRestaurant(): void {
     this.reviewService.getRestaurantMostPopular().subscribe({
-      next: (data:RestaurantPopularity) => {
+      next: (data: RestaurantPopularity) => {
         this.popular = data;
         this.cdr.detectChanges();
       },
@@ -89,8 +90,8 @@ export class CreateRestaurantPromotionForm implements OnInit {
     const req: SavePromotionRestaurantRequestDTO = {
       name: formValue.name.trim(),
       discountPercent: formValue.discountPercent,
-      startDate: formValue.startDate!.toISOString(),
-      endDate: formValue.endDate!.toISOString(),
+      startDate: format(formValue.startDate!, "yyyy-MM-dd'T'HH:mm:ss"),
+      endDate: format(formValue.endDate!, "yyyy-MM-dd'T'HH:mm:ss"),
       restaurantId: this.popular.restaurantId,
     };
 

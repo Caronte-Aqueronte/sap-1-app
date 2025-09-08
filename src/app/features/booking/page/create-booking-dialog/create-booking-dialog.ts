@@ -18,8 +18,14 @@ import { Room } from '../../../room/model/Room';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { ClientService } from '../../../client/service/client-service';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { CreateClientRequestDTO } from '../../../client/model/CreateClientRequestDTO';
 import { CreateBookingRequestDTO } from '../../model/CreateBookingRequestDTO';
+import { PromotionClientService } from '../../../promotion/service/promotion-client-service';
+import { PromotionRoomService } from '../../../promotion/service/promotion-room-service';
+import { PromotionClient } from '../../../promotion/model/PromotionClient';
+import { PromotionRoom } from '../../../promotion/model/PromotionRoom';
+import { Promotion } from '../../../promotion/model/Promotion';
 
 @Component({
   selector: 'app-create-booking-dialog',
@@ -34,6 +40,7 @@ import { CreateBookingRequestDTO } from '../../model/CreateBookingRequestDTO';
     FormsModule,
     NzDividerModule,
     NzIconModule,
+    NzRadioModule,
   ],
   templateUrl: './create-booking-dialog.html',
   styleUrl: './create-booking-dialog.css',
@@ -76,11 +83,20 @@ export class CreateBookingDialog {
   checkOut: string;
   total = 0;
 
+  // para selección de promociones
+  clientPromotions: PromotionClient[] = [];
+  roomPromotions: PromotionRoom[] = [];
+
+  // va a ser el id de la promoción seleccionada. Null para no aplicar.
+  selectedPromotionId: Promotion | null = null;
+
   constructor(
     private modal: NzModalRef,
     private bookingService: BookingService,
     private cdr: ChangeDetectorRef,
     private clientService: ClientService,
+    private promotionClientService: PromotionClientService,
+    private promotionRoomService: PromotionRoomService,
     private toastr: ToastrService,
     private errorRender: ErrorRenderService,
     @Inject(NZ_MODAL_DATA)
@@ -162,6 +178,8 @@ export class CreateBookingDialog {
         this.toastr.error('Debe seleccionar o crear un cliente');
         return;
       }
+      // Al entrar al paso de promociones, cargamos las listas
+      this.loadPromotions();
     }
     this.current += 1;
   }
@@ -181,7 +199,10 @@ export class CreateBookingDialog {
       roomId: this.data.room.id,
       checkInAt: this.checkIn,
       checkOutAt: this.checkOut,
-      appliedPromotionId: null,
+      // Si no hay selección o está vacío, envia null
+      appliedPromotionId: this.selectedPromotionId
+        ? this.selectedPromotionId.id
+        : null,
     };
 
     console.log(body);
@@ -201,5 +222,49 @@ export class CreateBookingDialog {
         this.toastr.error(this.errorRender.render(err));
       },
     });
+  }
+
+  /**
+   * Carga las promociones disponibles.
+   * - Trae todas las promociones de cliente.
+   * - Trae todas las promociones de habitación y filtra por la habitación seleccionada.
+   */
+  private loadPromotions(): void {
+    const roomId: string = this.data.room.id;
+
+    // promociones de cliente
+    this.promotionClientService.getActivePromotions().subscribe({
+      next: (data: PromotionClient[]) => {
+        this.clientPromotions = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.toastr.error(this.errorRender.render(err.error));
+      },
+    });
+
+    // promociones de habitación
+    this.promotionRoomService.getByRoomId(roomId).subscribe({
+      next: (data: PromotionRoom[]) => {
+        this.roomPromotions = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.toastr.error(this.errorRender.render(err.error));
+      },
+    });
+  }
+
+  /**
+   * Si aplica, obtiene el total con descuento
+   */
+  get discountedTotal(): number {
+    if (!this.selectedPromotionId) {
+      return this.total;
+    }
+
+    const discount =
+      (this.total * this.selectedPromotionId.discountPercent) / 100;
+    return this.total - discount;
   }
 }

@@ -20,6 +20,7 @@ import { MostPopularRoom } from '../../../../room/model/MostPopularRoom';
 import { PromotionBaseForm } from '../../../component/promotion-base-form/promotion-base-form';
 import { SavePromotionRoomRequestDTO } from '../../../model/request/SavePromotionRoomRequestDTO';
 import { PromotionRoomService } from '../../../service/promotion-room-service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-create-room-promotion-form',
@@ -86,7 +87,6 @@ export class CreateRoomPromotionForm implements OnInit {
    * @param hotelId identificador del hotel seleccionado
    */
   onHotelChange(hotelId: string): void {
-
     this.selectedHotelId = hotelId || null;
     this.mostPopularRoom = null;
 
@@ -127,8 +127,8 @@ export class CreateRoomPromotionForm implements OnInit {
     const req: SavePromotionRoomRequestDTO = {
       name: formValue.name.trim(),
       discountPercent: formValue.discountPercent,
-      startDate: formValue.startDate!.toISOString(),
-      endDate: formValue.endDate!.toISOString(),
+      startDate: format(formValue.startDate!, "yyyy-MM-dd'T'HH:mm:ss"),
+      endDate: format(formValue.endDate!, "yyyy-MM-dd'T'HH:mm:ss"),
       hotelId: this.selectedHotelId,
       roomId: this.mostPopularRoom.roomId,
     };

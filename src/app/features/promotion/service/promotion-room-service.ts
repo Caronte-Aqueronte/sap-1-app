@@ -19,6 +19,17 @@ export class PromotionRoomService {
     return this.http.get<PromotionRoom[]>(this.path);
   }
 
+
+
+  /**
+   * Obtiene todas las promociones de habitación asociadas a una habitacion.
+   * @returns Observable con el listado de {@link PromotionRoom}
+   */
+  public getByRoomId(roomId:string): Observable<PromotionRoom[]> {
+    return this.http.get<PromotionRoom[]>(`${this.path}/public/active-promotions/by-room/${roomId}`);
+  }
+
+
   /**
    * Crea una nueva promoción de habitación.
    * @param request datos requeridos para la creación

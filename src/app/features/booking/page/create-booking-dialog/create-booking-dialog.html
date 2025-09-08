@@ -1,5 +1,6 @@
 <nz-steps nzType="navigation" [nzCurrent]="current">
   <nz-step nzTitle="Identificación"></nz-step>
+  <nz-step nzTitle="Promociones"></nz-step>
   <nz-step nzTitle="Resumen"></nz-step>
 </nz-steps>
 
@@ -175,6 +176,49 @@
   </form>
 
   } } @if (current === 1) {
+  <!--Selección de promociones -->
+  <div
+    class="p-6 rounded-2xl bg-white border border-gray-200 shadow-md space-y-4"
+  >
+    <div class="text-2xl font-bold text-[#012e5c] flex items-center gap-2">
+      <nz-icon nzType="gift" nzTheme="outline" class="text-[#fb9120]"></nz-icon>
+      Selecciona una promoción (opcional)
+    </div>
+
+    <nz-radio-group
+      [(ngModel)]="selectedPromotionId"
+      name="promotionChoice"
+      class="flex flex-col gap-3"
+    >
+      <label nz-radio [nzValue]="''">
+        <span class="font-medium">No aplicar promoción</span>
+      </label>
+
+      <nz-divider [nzText]="'Promociones de cliente'"></nz-divider>
+      @for (promo of clientPromotions; track promo.id) {
+      <label nz-radio [nzValue]="promo">
+        <span class="font-medium">{{ promo.name }}</span>
+        <span class="text-gray-500"> - {{ promo.discountPercent }}%</span>
+        <span class="ml-2 text-xs text-gray-400"
+          >({{ promo.startDateStr }} - {{ promo.endDateStr }})</span
+        >
+      </label>
+      }
+
+      <nz-divider [nzText]="'Promociones de habitación'"></nz-divider>
+      @for (promo of roomPromotions; track promo.id) {
+      <label nz-radio [nzValue]="promo">
+        <span class="font-medium">{{ promo.name }}</span>
+        <span class="text-gray-500"> - {{ promo.discountPercent }}%</span>
+        <span class="ml-2 text-xs text-gray-400"
+          >({{ promo.startDateStr }} - {{ promo.endDateStr }})</span
+        >
+      </label>
+      }
+    </nz-radio-group>
+  </div>
+
+  } @if (current === 2) {
   <div
     class="p-6 rounded-2xl bg-white border border-gray-200 shadow-md space-y-4"
   >
@@ -246,10 +290,23 @@
 
     <!-- total -->
     <div
-      class="text-2xl font-extrabold text-[#012e5c] flex items-center justify-between"
+      class="text-[#012e5c] flex flex-col gap-2 items-end"
     >
-      <span>Total</span>
-      <span class="text-[#fb9120]">Q {{ total }}</span>
+      @if (selectedPromotionId) {
+      <div class="flex items-center justify-between w-full">
+        <span>Sub Total</span>
+        <span class="line-through text-gray-400">Q {{ total }}</span>
+      </div>
+      <div class="flex items-center justify-between w-full text-green-600">
+        <span>Promoción aplicada:</span>
+        <span>-{{ selectedPromotionId.discountPercent }}%</span>
+      </div>
+      }
+
+      <div class="flex items-center justify-between w-full">
+        <span class="text-2xl font-extrabold ">Total a pagar</span>
+        <span class="text-2xl font-extrabold text-[#fb9120]">Q {{ discountedTotal }}</span>
+      </div>
     </div>
   </div>
 
@@ -260,12 +317,14 @@
   <div class="steps-action">
     @if (current > 0) {
     <button nz-button nzType="default" (click)="pre()"><span>Ant</span></button>
-    } @if (current < 1) {
+    } @if (current < 2) {
     <button nz-button nzType="default" (click)="next()">
       <span>Sig</span>
     </button>
-    } @if (current === 1) {
-    <button nz-button nzType="primary" (click)="confirmBooking()">Confirmar</button>
+    } @if (current === 2) {
+    <button nz-button nzType="primary" (click)="confirmBooking()">
+      Confirmar
+    </button>
     }
   </div>
 </div>

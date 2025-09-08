@@ -20,6 +20,14 @@ export class PromotionClientService {
   }
 
   /**
+   * Lista todas las promociones activasf de clientes frecuentes
+   * @returns lista de promciones de cleinte
+   */
+  public getActivePromotions(): Observable<PromotionClient[]> {
+    return this.http.get<PromotionClient[]>(`${this.path}/public`);
+  }
+
+  /**
    *  Crea una nueva promoción de cliente frecuente
    * @param request request para mandar a crear
    * @returns
