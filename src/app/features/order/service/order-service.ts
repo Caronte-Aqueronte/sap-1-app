@@ -3,6 +3,7 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpResponse,
+  HttpParams,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -19,8 +20,18 @@ export class OrderService {
    * Obtiene todas las órdenes creadas
    * @returns lista de ordenes creadas
    */
-  public getAll(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.path);
+  public getAll(restaurantId?: string | null): Observable<Order[]> {
+    const params = restaurantId
+      ? new HttpParams().set('restaurantId', restaurantId)
+      : undefined;
+    return this.http.get<Order[]>(this.path, { params });
+  }
+
+  /**
+   * Obtiene el detalle de una orden por su ID
+   */
+  public getById(orderId: string): Observable<Order> {
+    return this.http.get<Order>(`${this.path}/${orderId}`);
   }
 
   /**

@@ -1,0 +1,92 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>Reservas</nz-page-header-title>
+  <nz-page-header-subtitle>Listado de reservas</nz-page-header-subtitle>
+</nz-page-header>
+
+<div class="mb-4">
+  <nz-space>
+    <div *nzSpaceItem class="flex items-center gap-2">
+      <span class="text-sm text-gray-600">Filtrar por hotel:</span>
+      <nz-select
+        nzAllowClear
+        nzPlaceHolder="Seleccione un hotel"
+        [(ngModel)]="selectedHotelId"
+        name="hotelFilter"
+        (ngModelChange)="onHotelChange($event)"
+        style="min-width: 280px"
+      >
+        @for (hotel of hotels; track hotel.id) {
+        <nz-option [nzValue]="hotel.id" [nzLabel]="hotel.name"></nz-option>
+        }
+      </nz-select>
+    </div>
+  </nz-space>
+  <nz-divider></nz-divider>
+</div>
+
+<nz-table
+  #basicTable
+  [nzData]="bookings"
+  [nzPageSize]="10"
+  [nzScroll]="{ x: '1200px' }"
+>
+  <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Hotel</th>
+      <th>Habitación</th>
+      <th>Estado</th>
+      <th>Check-in</th>
+      <th>Check-out</th>
+      <th>Total</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of basicTable.data; track data) {
+    <tr>
+      <td>{{ data.clientName }}</td>
+      <td>{{ data.hotelName }}</td>
+      <td>{{ data.roomNumber }}</td>
+      <td>
+        @if (data.status === 'RESERVED') {
+        <nz-tag nzColor="blue">Reservada</nz-tag>
+        } @else if (data.status === 'CHECKED_OUT') {
+        <nz-tag nzColor="green">Check-out</nz-tag>
+        } @else if (data.status === 'CANCELED') {
+        <nz-tag nzColor="red">Cancelada</nz-tag>
+        } @else {
+        <nz-tag>--</nz-tag>
+        }
+      </td>
+      <td>{{ data.checkInAt }}</td>
+      <td>{{ data.checkOutAt }}</td>
+      <td>Q {{ data.totalAmount }}</td>
+      <td>
+        <div class="flex gap-2">
+          <button
+            nz-button
+            nzType="default"
+            nzShape="round"
+            (click)="onCancel(data)"
+            [disabled]="data.status !== 'RESERVED'"
+          >
+            <nz-icon nzType="stop"></nz-icon>
+            Cancelar
+          </button>
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="round"
+            (click)="onCheckOut(data)"
+            [disabled]="data.status !== 'RESERVED'"
+          >
+            <nz-icon nzType="logout"></nz-icon>
+            Check-out
+          </button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</nz-table>

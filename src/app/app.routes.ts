@@ -17,6 +17,8 @@ import { RestaurantsExplorePage } from './features/restaurant/page/restaurants-e
 import { RestaurantPublicDetailPage } from './features/restaurant/page/restaurant-public-detail-page/restaurant-public-detail-page';
 import { PromotionAdminPanel } from './features/promotion/page/promotion-admin-panel/promotion-admin-panel';
 import { OrderPage } from './features/order/page/order-page/order-page';
+import { OrderDetailPage } from './features/order/page/order-detail-page/order-detail-page';
+import { BookingsPage } from './features/booking/page/bookings-page/bookings-page';
 
 export const routes: Routes = [
   {
@@ -61,7 +63,11 @@ export const routes: Routes = [
       {
         path: 'staff',
         component: StaffDashBoard,
-        children: [{ path: 'orders', component: OrderPage }],
+        children: [
+          { path: 'orders', component: OrderPage },
+          { path: 'orders/:id', component: OrderDetailPage },
+          { path: 'bookings', component: BookingsPage },
+        ],
       },
     ],
   },

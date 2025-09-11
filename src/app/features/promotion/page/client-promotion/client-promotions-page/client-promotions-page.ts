@@ -13,6 +13,7 @@ import { ErrorRenderService } from '../../../../../core/services/error-render-se
 import { ToastrService } from 'ngx-toastr';
 import { CreateClientPromotionForm } from '../create-client-promotion-form/create-client-promotion-form';
 import { EditClientPromotionForm } from '../edit-client-promotion-form/edit-client-promotion-form';
+import { NzTagModule } from "ng-zorro-antd/tag";
 
 @Component({
   selector: 'app-client-promotions-page',
@@ -25,7 +26,8 @@ import { EditClientPromotionForm } from '../edit-client-promotion-form/edit-clie
     NzSpaceModule,
     NzModalModule,
     NgClass,
-  ],
+    NzTagModule
+],
   templateUrl: './client-promotions-page.html',
   styleUrl: './client-promotions-page.css',
 })

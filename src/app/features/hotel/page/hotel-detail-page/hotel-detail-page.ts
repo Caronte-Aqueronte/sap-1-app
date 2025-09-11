@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { CreateRoomForm } from '../../../room/page/create-room-form/create-room-form';
 import { EditRoomForm } from '../../../room/page/edit-room-form/edit-room-form';
 import { RoomStatus } from '../../../room/model/RoomStatus';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
   selector: 'app-hotel-detail-page',
@@ -29,15 +30,12 @@ import { RoomStatus } from '../../../room/model/RoomStatus';
     NzModalModule,
     NzSpaceModule,
     NzDividerModule,
+    NzTagModule,
   ],
   templateUrl: './hotel-detail-page.html',
   styleUrl: './hotel-detail-page.css',
 })
 export class HotelDetailPage {
-  statusMap: Record<string, { text: string; color: string }> = {
-    ACTIVE: { text: 'Activa', color: 'bg-green-500' },
-    INACTIVE: { text: 'Inactiva', color: 'bg-red-500' },
-  };
   hotel!: Hotel;
   rooms: Room[] = [];
   constructor(
@@ -137,6 +135,7 @@ export class HotelDetailPage {
       next: () => {
         this.toastr.success(`La habitación ${room.number} cambió de estado`);
         this.getRoomsByHotelId(); // refresca lista
+
       },
       error: (err) => {
         this.toastr.error(this.errorRender.render(err.error));

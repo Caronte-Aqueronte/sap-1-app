@@ -41,12 +41,11 @@
       <td>{{ data.roomName }}</td>
       <td>{{ data.hotelName }}</td>
       <td>
-        <div
-          class="px-3 py-1 rounded-full text-white text-sm font-semibold text-center w-32"
-          [ngClass]="data.isActive ? 'bg-green-500' : 'bg-red-500'"
-        >
-          {{ data.isActive ? "Activa" : "Inactiva" }}
-        </div>
+        @if (data.isActive) {
+        <nz-tag nzColor="green">Activa</nz-tag>
+        } @else {
+        <nz-tag nzColor="red">Inactiva</nz-tag>
+        }
       </td>
 
       <td>

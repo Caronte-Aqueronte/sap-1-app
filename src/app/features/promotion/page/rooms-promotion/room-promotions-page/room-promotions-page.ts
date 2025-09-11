@@ -1,17 +1,18 @@
+import { NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
-import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
-import { NgClass } from '@angular/common';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
-import { PromotionRoom } from '../../../model/PromotionRoom';
-import { PromotionRoomService } from '../../../service/promotion-room-service';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorRenderService } from '../../../../../core/services/error-render-service';
+import { PromotionRoom } from '../../../model/PromotionRoom';
+import { PromotionRoomService } from '../../../service/promotion-room-service';
 import { CreateRoomPromotionForm } from '../create-room-promotion-form/create-room-promotion-form';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
   selector: 'app-room-promotions-page',
@@ -23,7 +24,7 @@ import { CreateRoomPromotionForm } from '../create-room-promotion-form/create-ro
     NzIconModule,
     NzSpaceModule,
     NzModalModule,
-    NgClass,
+    NzTagModule
   ],
   templateUrl: './room-promotions-page.html',
   styleUrl: './room-promotions-page.css',

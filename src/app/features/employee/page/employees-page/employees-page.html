@@ -1,0 +1,57 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>Empleados</nz-page-header-title>
+  <nz-page-header-subtitle>Listado de empleados</nz-page-header-subtitle>
+  <nz-page-header-extra>
+    <nz-space>
+      <button *nzSpaceItem nz-button nzType="default" (click)="onCreateEmployee()">
+        <nz-icon nzType="plus"></nz-icon> Nuevo empleado
+      </button>
+    </nz-space>
+  </nz-page-header-extra>
+</nz-page-header>
+
+
+<nz-table #basicTable [nzData]="employees" [nzPageSize]="10">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Cliente</th>
+      <th>Restaurante</th>
+      <th>Promo Aplicada</th>
+      <th>Total</th>
+      <th>Ordenado al</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of basicTable.data; track data) {
+    <tr>
+      <td>{{ data.id }}</td>
+      <td>{{ data.clientName }}</td>
+      <td>{{ data.restaurantName }}</td>
+
+      <td>
+        @if(data.promotionName){
+        {{ data.promotionName }}
+        }@else { -- }
+      </td>
+
+      <td>Q {{ data.totalAmount }}</td>
+
+      <td>{{ data.orderAtStr }}</td>
+      <td>
+        <div class="flex gap-2">
+          <button
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            (click)="onViewEmployee(data)"
+          >
+            <nz-icon nzType="eye"></nz-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</nz-table>

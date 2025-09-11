@@ -12,6 +12,7 @@ import { PromotionRestaurant } from '../../../model/PromotionRestaurant';
 import { PromotionRestaurantService } from '../../../service/promotion-restaurant-service';
 import { ErrorRenderService } from '../../../../../core/services/error-render-service';
 import { CreateRestaurantPromotionForm } from '../create-restaurant-promotion-form/create-restaurant-promotion-form';
+import { NzTagModule } from "ng-zorro-antd/tag";
 
 @Component({
   selector: 'app-restaurant-promotions-page',
@@ -24,7 +25,8 @@ import { CreateRestaurantPromotionForm } from '../create-restaurant-promotion-fo
     NzSpaceModule,
     NzModalModule,
     NgClass,
-  ],
+    NzTagModule
+],
   templateUrl: './restaurant-promotions-page.html',
   styleUrl: './restaurant-promotions-page.css',
 })

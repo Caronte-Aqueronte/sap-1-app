@@ -1,0 +1,103 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>
+    <span class="inline-flex items-center gap-2">
+      <nz-icon
+        nzType="file-protect"
+        nzTheme="outline"
+        class="text-[#fb9120]"
+      ></nz-icon>
+      <span class="font-bold text-gray-900">
+        Detalle de Orden @if(order){#{{ order.id }}}
+      </span>
+    </span>
+  </nz-page-header-title>
+  <nz-page-header-subtitle>
+    <span class="text-gray-900"
+      >Visualiza la información y los ítems de la orden.</span
+    >
+  </nz-page-header-subtitle>
+</nz-page-header>
+
+<div class="mt-6 flex justify-center">
+  @if (order) {
+  <div
+    class="bg-white shadow-xl rounded-2xl p-8 border border-gray-200 w-full md:w-[75vw] print-area"
+  >
+    <div class="mb-6 flex items-center justify-between">
+      <h2 class="text-2xl font-bold text-[#012e5c]">Información de la Orden</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+      <div>
+        <p class="text-sm font-medium text-gray-500">Cliente</p>
+        <p class="text-lg text-gray-900 font-bold">{{ order.clientName }}</p>
+      </div>
+
+      <div>
+        <p class="text-sm font-medium text-gray-500">Restaurante</p>
+        <p class="text-lg text-gray-900 font-bold">
+          {{ order.restaurantName }}
+        </p>
+      </div>
+
+      <div>
+        <p class="text-sm font-medium text-gray-500">Fecha</p>
+        <p class="text-lg text-gray-900 font-bold">{{ order.orderAtStr }}</p>
+      </div>
+
+      <div>
+        <p class="text-sm font-medium text-gray-500">Promoción aplicada</p>
+        <p class="text-lg text-gray-900 font-bold">
+          {{ order.promotionName || "N/A" }}
+        </p>
+      </div>
+
+      <div>
+        <p class="text-sm font-medium text-gray-500">Subtotal</p>
+        <p class="text-lg font-extrabold text-[#012e5c]">
+          Q {{ order.subTotalAmount }}
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500">Descuento</p>
+        <p class="text-lg font-extrabold text-[#012e5c]">
+          Q {{ order.discountAmount }}
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500">Total</p>
+        <p class="text-lg font-extrabold text-[#fb9120]">
+          Q {{ order.totalAmount }}
+        </p>
+      </div>
+
+      <div class="col-span-full">
+        <nz-divider nzText="Ítems de la Orden"></nz-divider>
+      </div>
+
+      <div class="col-span-full">
+        <nz-table #t [nzData]="order.items" [nzPageSize]="10">
+          <thead>
+            <tr>
+              <th>Platillo</th>
+              <th>Precio Unitario</th>
+              <th>Cantidad</th>
+              <th>Total Línea</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of t.data; track row.id) {
+            <tr>
+              <td>{{ row.menuItemName }}</td>
+              <td>Q {{ row.unitPrice }}</td>
+              <td>{{ row.quantity }}</td>
+              <td>Q {{ row.lineTotal }}</td>
+            </tr>
+            }
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+  }
+</div>

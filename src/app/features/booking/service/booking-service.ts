@@ -4,11 +4,13 @@ import {
   HttpErrorResponse,
   HttpHeaders,
   HttpResponse,
+  HttpParams,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CreateBookingRequestDTO } from '../model/CreateBookingRequestDTO';
 import { MostPopularRoom } from '../../room/model/MostPopularRoom';
+import { Booking } from '../model/Booking';
 
 @Injectable({
   providedIn: 'root',
@@ -65,5 +67,27 @@ export class BookingService {
     return this.http.get<MostPopularRoom>(
       `${this.path}/public/most-popular-room/${hotelId}`
     );
+  }
+
+  /**
+   * Lista reservas, opcionalmente filtrando por hotel
+   */
+  getAll(hotelId?: string | null): Observable<Booking[]> {
+    const params = hotelId ? new HttpParams().set('hotelId', hotelId) : undefined;
+    return this.http.get<Booking[]>(`${this.path}`, { params });
+  }
+
+  /**
+   * Cancela una reserva
+   */
+  cancel(bookingId: string): Observable<void> {
+    return this.http.post<void>(`${this.path}/public/cancel/${bookingId}`, {});
+  }
+
+  /**
+   * Marca check-out de una reserva
+   */
+  checkOut(bookingId: string): Observable<void> {
+    return this.http.post<void>(`${this.path}/check-out/${bookingId}`, {});
   }
 }
