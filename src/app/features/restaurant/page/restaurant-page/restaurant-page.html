@@ -17,7 +17,12 @@
   </nz-page-header-extra>
 </nz-page-header>
 
-<nz-table #basicTable [nzData]="restaurants" [nzPageSize]="10">
+<nz-table
+  #basicTable
+  [nzData]="restaurants"
+  [nzPageSize]="10"
+  [nzScroll]="{ y: '200px' }"
+>
   <thead>
     <tr>
       <th>Nombre</th>

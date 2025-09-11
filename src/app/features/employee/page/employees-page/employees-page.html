@@ -1,46 +1,76 @@
 <nz-page-header nzBackIcon [nzGhost]="false">
   <nz-page-header-title>Empleados</nz-page-header-title>
-  <nz-page-header-subtitle>Listado de empleados</nz-page-header-subtitle>
+  <nz-page-header-subtitle>Gestión de empleados</nz-page-header-subtitle>
   <nz-page-header-extra>
     <nz-space>
-      <button *nzSpaceItem nz-button nzType="default" (click)="onCreateEmployee()">
+      <button
+        *nzSpaceItem
+        nz-button
+        nzType="default"
+        (click)="onCreateEmployee()"
+      >
         <nz-icon nzType="plus"></nz-icon> Nuevo empleado
       </button>
     </nz-space>
   </nz-page-header-extra>
 </nz-page-header>
 
+<div class="mb-4">
+  <nz-space>
+    <div *nzSpaceItem class="flex items-center gap-2">
+      <span class="text-sm text-gray-600">Filtrar por establecimiento:</span>
+      <nz-select
+        nzAllowClear
+        nzPlaceHolder="Seleccione un establecimiento"
+        [(ngModel)]="selectedEstablishmentId"
+        name="establishmentFilter"
+        (ngModelChange)="onEstablishmentChange($event)"
+        style="min-width: 280px"
+      >
+        @for (establishment of establishments; track establishment.id) {
+        <nz-option [nzValue]="establishment.id" [nzLabel]="establishment.name">
+        </nz-option>
+        }
+      </nz-select>
+    </div>
+  </nz-space>
+  <nz-divider></nz-divider>
+</div>
 
-<nz-table #basicTable [nzData]="employees" [nzPageSize]="10">
+<nz-table
+  #basicTable
+  [nzData]="employees"
+  [nzPageSize]="10"
+  [nzScroll]="{ y: '200px' }"
+>
   <thead>
     <tr>
-      <th>Id</th>
-      <th>Cliente</th>
-      <th>Restaurante</th>
-      <th>Promo Aplicada</th>
-      <th>Total</th>
-      <th>Ordenado al</th>
+      <th>Nombre</th>
+      <th>DPI</th>
+      <th>Establecimiento</th>
+      <th>Salario</th>
+      <th>Pagos</th>
       <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
     @for (data of basicTable.data; track data) {
     <tr>
-      <td>{{ data.id }}</td>
-      <td>{{ data.clientName }}</td>
-      <td>{{ data.restaurantName }}</td>
-
-      <td>
-        @if(data.promotionName){
-        {{ data.promotionName }}
-        }@else { -- }
-      </td>
-
-      <td>Q {{ data.totalAmount }}</td>
-
-      <td>{{ data.orderAtStr }}</td>
+      <td>{{ data.firstName }} {{ data.lastName }}</td>
+      <td>{{ data.nationalId }}</td>
+      <td>{{ data.establishmentName }}</td>
+      <td>Q {{ data.salary }}</td>
+      <td>{{ data.payments.length || 0 }}</td>
       <td>
         <div class="flex gap-2">
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="circle"
+            (click)="onEditEmployee(data)"
+          >
+            <nz-icon nzType="edit"></nz-icon>
+          </button>
           <button
             nz-button
             nzType="default"

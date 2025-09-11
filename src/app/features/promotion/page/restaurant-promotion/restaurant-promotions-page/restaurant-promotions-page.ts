@@ -24,7 +24,6 @@ import { NzTagModule } from "ng-zorro-antd/tag";
     NzIconModule,
     NzSpaceModule,
     NzModalModule,
-    NgClass,
     NzTagModule
 ],
   templateUrl: './restaurant-promotions-page.html',

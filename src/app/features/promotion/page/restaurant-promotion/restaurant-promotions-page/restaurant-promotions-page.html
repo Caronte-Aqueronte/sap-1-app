@@ -18,7 +18,12 @@
   </nz-page-header-extra>
 </nz-page-header>
 
-<nz-table #table [nzData]="promotions" [nzPageSize]="10">
+<nz-table
+  #table
+  [nzData]="promotions"
+  [nzPageSize]="10"
+  [nzScroll]="{ y: '200px' }"
+>
   <thead>
     <tr>
       <th>Nombre</th>

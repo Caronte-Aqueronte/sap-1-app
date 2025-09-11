@@ -1,0 +1,72 @@
+<form nz-form [nzLayout]="'vertical'" [formGroup]="form" class="space-y-6">
+  <!-- Encabezado con estilo -->
+  <div
+    class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200 shadow-sm"
+  >
+    <div
+      class="flex items-center justify-center w-10 h-10 rounded-full bg-[#fb9120]/10"
+    >
+      <nz-icon
+        nzType="user"
+        nzTheme="outline"
+        class="text-[#fb9120] text-xl"
+      ></nz-icon>
+    </div>
+    <div>
+      <p class="text-sm text-gray-600">Pago para</p>
+      <p class="font-semibold text-lg text-gray-900">
+        {{ data.employeeName }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Grid de inputs -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Monto -->
+    <nz-form-item>
+      <nz-form-label [nzRequired]="true" nzFor="amount">Monto</nz-form-label>
+      <nz-form-control [nzErrorTip]="amountErrorTpl">
+        <nz-input-group [nzAddOnBefore]="amountIcon">
+          <nz-input-number
+            id="amount"
+            formControlName="amount"
+            [nzMin]="1"
+            class="w-full"
+            [nzPlaceHolder]="'Ingrese el monto'"
+          ></nz-input-number>
+        </nz-input-group>
+        <ng-template #amountIcon>
+          <nz-icon nzType="dollar" class="text-[#fb9120]"></nz-icon>
+        </ng-template>
+        <ng-template #amountErrorTpl let-control>
+          @if (control.hasError('required')) {
+          <span>El monto es obligatorio</span>
+          } @if (control.hasError('min')) {
+          <span>El monto debe ser mayor a 0</span>
+          }
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Fecha -->
+    <nz-form-item>
+      <nz-form-label nzFor="payedAt">Fecha de pago</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker
+          id="payedAt"
+          formControlName="payedAt"
+          nzFormat="dd/MM/yyyy"
+          class="w-full"
+          nzPlaceHolder="Seleccione una fecha"
+        ></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
+
+<!-- Botones -->
+<div *nzModalFooter class="flex justify-end gap-2">
+  <button nz-button nzType="primary" (click)="onSubmit()">
+    <nz-icon nzType="plus"></nz-icon> Guardar Pago
+  </button>
+</div>
