@@ -12,6 +12,18 @@ export class PromotionRestaurantService {
   constructor(private http: HttpClient) {}
 
   /**
+   * Trae las promociones de un restaurante por el id
+   * @param restaurantId promociones obtenidasF
+   * @returns
+   */
+  public getActiveRestaurantPromotionsByRestaurant(
+    restaurantId: string
+  ): Observable<PromotionRestaurant[]> {
+    return this.http.get<PromotionRestaurant[]>(
+      `${this.path}/public/active-promotions/by-restaurant/${restaurantId}`
+    );
+  }
+  /**
    * Obtiene todas las promociones de restaurantes
    *
    * @returns Observable con la lista de promociones

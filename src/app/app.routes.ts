@@ -16,6 +16,7 @@ import { RoomDetailPage } from './features/room/page/room-detail-page/room-detai
 import { RestaurantsExplorePage } from './features/restaurant/page/restaurants-explore-page/restaurants-explore-page';
 import { RestaurantPublicDetailPage } from './features/restaurant/page/restaurant-public-detail-page/restaurant-public-detail-page';
 import { PromotionAdminPanel } from './features/promotion/page/promotion-admin-panel/promotion-admin-panel';
+import { OrderPage } from './features/order/page/order-page/order-page';
 
 export const routes: Routes = [
   {
@@ -57,7 +58,11 @@ export const routes: Routes = [
           { path: 'promotions', component: PromotionAdminPanel },
         ],
       },
-      { path: 'staff', component: StaffDashBoard },
+      {
+        path: 'staff',
+        component: StaffDashBoard,
+        children: [{ path: 'orders', component: OrderPage }],
+      },
     ],
   },
 

@@ -1,1 +1,46 @@
-<p>staff-dash-board works!</p>
+<nz-layout class="main-layout">
+  <nz-sider
+    nzCollapsible
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+    nzTheme="light"
+  >
+    <div class="logo">
+      <img src="img/logo.png" alt="Logo Empresa" />
+    </div>
+    <ul nz-menu class="custom-menu" nzMode="inline" nzTheme="light">
+      <li nz-menu-item [routerLink]="['/dashboard/staff/orders']">
+        <nz-icon nzType="rest" nzTheme="outline" />
+        <span>Pedidos</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="flex justify-between items-center w-full">
+        <!-- Botón del menú -->
+        <nz-icon
+          class="trigger"
+          [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          (click)="isCollapsed = !isCollapsed"
+        ></nz-icon>
+
+        <div class="flex items-center gap-4 pr-6">
+          <div class="flex items-center gap-2">
+            <nz-icon nzType="user"></nz-icon>
+            <span class="font-semibold">Hola, {{ userFirstName }}</span>
+          </div>
+          <button nz-button nzType="default" nzDanger (click)="onLogout()">
+            <nz-icon nzType="logout"></nz-icon> Salir
+          </button>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <nz-breadcrumb> </nz-breadcrumb>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

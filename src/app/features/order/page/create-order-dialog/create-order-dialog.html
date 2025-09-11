@@ -1,0 +1,327 @@
+<nz-steps nzType="navigation" [nzCurrent]="current">
+  <nz-step nzTitle="Cliente"></nz-step>
+  <nz-step nzTitle="Restaurante"></nz-step>
+  <nz-step nzTitle="Orden"></nz-step>
+  <nz-step nzTitle="Promociones"></nz-step>
+</nz-steps>
+
+<div class="steps-content mt-4 max-h-[60vh] overflow-y-auto pr-2">
+  @if (current === 0) {
+  <!-- Paso 1: Identificación del cliente -->
+  <form
+    nz-form
+    [nzLayout]="'vertical'"
+    [formGroup]="searchForm"
+    (ngSubmit)="searchClient()"
+  >
+    <nz-form-item>
+      <nz-form-label>Documento de Identidad</nz-form-label>
+      <nz-form-control [nzErrorTip]="nationalIdErrorTpl">
+        <input
+          nz-input
+          formControlName="nationalId"
+          placeholder="Ingrese DPI/Número de identificación"
+        />
+        <ng-template #nationalIdErrorTpl let-control>
+          @if (control.hasError('required')) {
+          <span>El número de identificación es obligatorio</span>
+          } @if (control.hasError('minlength') || control.hasError('maxlength'))
+          {
+          <span>Debe tener exactamente 13 dígitos</span>
+          }
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <button nz-button nzType="primary">Buscar</button>
+  </form>
+
+  @if (client) {
+  <nz-divider [nzText]="'Cliente seleccionado'"></nz-divider>
+  <div class="p-5 rounded-xl bg-white border border-gray-200 shadow-sm">
+    <div class="flex items-center justify-between mb-2">
+      <div class="text-lg font-bold text-[#012e5c]">
+        {{ client.firstName }} {{ client.lastName }}
+      </div>
+      <div class="text-sm text-gray-500">{{ client.email }}</div>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+      <div class="flex items-center gap-2">
+        <nz-icon
+          nzType="idcard"
+          nzTheme="outline"
+          class="text-[#fb9120]"
+        ></nz-icon>
+        <span class="font-medium">ID Nacional:</span>
+        <span class="text-gray-800">{{ client.nationalId }}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <nz-icon
+          nzType="phone"
+          nzTheme="outline"
+          class="text-[#fb9120]"
+        ></nz-icon>
+        <span class="font-medium">Tel:</span>
+        <span class="text-gray-800">{{ client.phone }}</span>
+      </div>
+      <div class="flex items-center gap-2 md:col-span-2">
+        <nz-icon
+          nzType="file-protect"
+          nzTheme="outline"
+          class="text-[#fb9120]"
+        ></nz-icon>
+        <span class="font-medium">NIT:</span>
+        <span class="text-gray-800">{{ client.nit }}</span>
+      </div>
+    </div>
+  </div>
+  } @if (clientNotFound) {
+  <nz-divider [nzText]="'Información del Cliente'"></nz-divider>
+  <form nz-form [nzLayout]="'vertical'" [formGroup]="clientForm">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <nz-form-item>
+        <nz-form-label>Nombre</nz-form-label>
+        <nz-form-control [nzErrorTip]="firstNameErrorTpl">
+          <input nz-input formControlName="firstName" />
+          <ng-template #firstNameErrorTpl let-control>
+            @if (control.hasError('required')) {<span
+              >El nombre es obligatorio</span
+            >} @if (control.hasError('maxlength')) {<span
+              >Máximo 50 caracteres</span
+            >}
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Apellido</nz-form-label>
+        <nz-form-control [nzErrorTip]="lastNameErrorTpl">
+          <input nz-input formControlName="lastName" />
+          <ng-template #lastNameErrorTpl let-control>
+            @if (control.hasError('required')) {<span
+              >El apellido es obligatorio</span
+            >} @if (control.hasError('maxlength')) {<span
+              >Máximo 50 caracteres</span
+            >}
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Email</nz-form-label>
+        <nz-form-control [nzErrorTip]="emailErrorTpl">
+          <input nz-input type="email" formControlName="email" />
+          <ng-template #emailErrorTpl let-control>
+            @if (control.hasError('required')) {<span
+              >El correo es obligatorio</span
+            >} @if (control.hasError('email')) {<span>Correo inválido</span>}
+            @if (control.hasError('maxlength')) {<span
+              >Máximo 150 caracteres</span
+            >}
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Teléfono</nz-form-label>
+        <nz-form-control [nzErrorTip]="phoneErrorTpl">
+          <input nz-input formControlName="phone" />
+          <ng-template #phoneErrorTpl let-control>
+            @if (control.hasError('required')) {<span
+              >El teléfono es obligatorio</span
+            >} @if (control.hasError('maxlength')) {<span
+              >Máximo 15 caracteres</span
+            >}
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>NIT</nz-form-label>
+        <nz-form-control [nzErrorTip]="nitErrorTpl">
+          <input nz-input formControlName="nit" />
+          <ng-template #nitErrorTpl let-control>
+            @if (control.hasError('required')) {<span
+              >El NIT es obligatorio</span
+            >} @if (control.hasError('maxlength')) {<span
+              >Máximo 15 caracteres</span
+            >}
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="flex justify-end mt-2">
+      <button nz-button nzType="primary" (click)="createClient()">
+        Guardar cliente
+      </button>
+    </div>
+  </form>
+  } } @if (current === 1) {
+  <!-- Paso 2: Selección de restaurante -->
+  <div
+    class="p-6 rounded-2xl bg-white border border-gray-200 shadow-md space-y-4"
+  >
+    <div class="text-2xl font-bold text-[#012e5c] flex items-center gap-2">
+      <nz-icon nzType="shop" nzTheme="outline" class="text-[#fb9120]"></nz-icon>
+      Selecciona un restaurante
+    </div>
+    <nz-form-item>
+      <nz-form-label nzRequired>Restaurante</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          nzPlaceHolder="Seleccione un restaurante"
+          [(ngModel)]="selectedRestaurantId"
+          name="restaurantId"
+          (ngModelChange)="onRestaurantChange($event)"
+        >
+          @for (r of restaurants; track r.id) {
+          <nz-option [nzValue]="r.id" [nzLabel]="r.name"></nz-option>
+          }
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  } @if (current === 2) {
+  <!-- Paso 3: Armado de orden -->
+  <div
+    class="p-6 rounded-2xl bg-white border border-gray-200 shadow-md space-y-4"
+  >
+    <div class="text-2xl font-bold text-[#012e5c] flex items-center gap-2">
+      <nz-icon nzType="shop" nzTheme="outline" class="text-[#fb9120]"></nz-icon>
+      Ítems de la orden
+    </div>
+
+    <form
+      nz-form
+      [formGroup]="itemForm"
+      (ngSubmit)="addItemToCart()"
+      class="flex gap-3 items-end"
+    >
+      <nz-form-item class="flex-1">
+        <nz-form-label nzRequired>Platillo</nz-form-label>
+        <nz-form-control>
+          <nz-select
+            formControlName="menuItemId"
+            nzPlaceHolder="Seleccione un platillo"
+          >
+            @for (menuItem of menuItems; track menuItem.id) {
+            <nz-option
+              [nzValue]="menuItem.id"
+              [nzLabel]="menuItem.name + ' - Q' + menuItem.price"
+            ></nz-option>
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Cantidad</nz-form-label>
+        <nz-form-control>
+          <nz-input-number
+            formControlName="quantity"
+            [nzMin]="1"
+          ></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button nz-button nzType="primary">Agregar</button>
+    </form>
+
+    <nz-table #t [nzData]="cart" [nzPageSize]="5">
+      <thead>
+        <tr>
+          <th>Platillo</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of t.data; track $index) {
+        <tr>
+          <td>{{ row.item.name }}</td>
+          <td>Q {{ row.item.price }}</td>
+          <td>{{ row.quantity }}</td>
+          <td>Q {{ row.subtotal }}</td>
+          <td>
+            <button
+              nz-button
+              nzType="primary"
+              nzDanger
+              nzShape="circle"
+              (click)="removeItem($index)"
+            >
+              <nz-icon nzType="delete"></nz-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </nz-table>
+
+    <div
+      class="text-2xl font-extrabold text-[#012e5c] flex items-center justify-between"
+    >
+      <span>Total</span>
+      <span class="text-[#fb9120]">Q {{ total }}</span>
+    </div>
+  </div>
+
+  } @if (current === 3) {
+  <!-- Paso 3: Promociones -->
+  <div
+    class="p-6 rounded-2xl bg-white border border-gray-200 shadow-md space-y-4"
+  >
+    <div class="text-2xl font-bold text-[#012e5c] flex items-center gap-2">
+      <nz-icon nzType="gift" nzTheme="outline" class="text-[#fb9120]"></nz-icon>
+      Selecciona una promoción (opcional)
+    </div>
+
+    <nz-radio-group
+      [(ngModel)]="selectedPromotionId"
+      name="promotionChoice"
+      class="flex flex-col gap-3"
+    >
+      <label nz-radio [nzValue]="''">
+        <span class="font-medium">No aplicar promoción</span>
+      </label>
+
+      <nz-divider [nzText]="'Promociones de cliente'"></nz-divider>
+      @for (promo of clientPromotions; track promo.id) {
+      <label nz-radio [nzValue]="promo.id">
+        <span class="font-medium">{{ promo.name }}</span>
+        <span class="text-gray-500"> - {{ promo.discountPercent }}%</span>
+        <span class="ml-2 text-xs text-gray-400"
+          >({{ promo.startDateStr }} → {{ promo.endDateStr }})</span
+        >
+      </label>
+      }
+
+      <nz-divider [nzText]="'Promociones de restaurante'"></nz-divider>
+      @for (promo of restaurantPromotions; track promo.id) {
+      <label nz-radio [nzValue]="promo.id">
+        <span class="font-medium">{{ promo.name }}</span>
+        <span class="text-gray-500"> - {{ promo.discountPercent }}%</span>
+        <span class="ml-2 text-xs text-gray-400"
+          >({{ promo.startDateStr }} → {{ promo.endDateStr }})</span
+        >
+      </label>
+      }
+    </nz-radio-group>
+  </div>
+  }
+</div>
+
+<div *nzModalFooter>
+  <div class="steps-action">
+    @if (current > 0) {
+    <button nz-button nzType="default" (click)="pre()"><span>Ant</span></button>
+    } @if (current < 3) {
+    <button nz-button nzType="default" (click)="next()">
+      <span>Sig</span>
+    </button>
+    } @if (current === 3) {
+    <button nz-button nzType="primary" (click)="confirmOrder()">
+      Confirmar
+    </button>
+    }
+  </div>
+</div>
