@@ -21,6 +21,7 @@ import { OrderDetailPage } from './features/order/page/order-detail-page/order-d
 import { BookingsPage } from './features/booking/page/bookings-page/bookings-page';
 import { EmployeesPage } from './features/employee/page/employees-page/employees-page';
 import { EmployeeDetailPage } from './features/employee/page/employee-detail-page/employee-detail-page';
+import { ReportsPage } from './features/report/page/reports-page/reports-page';
 
 export const routes: Routes = [
   {
@@ -62,6 +63,7 @@ export const routes: Routes = [
           { path: 'promotions', component: PromotionAdminPanel },
           { path: 'employees', component: EmployeesPage },
           { path: 'employee/:id', component: EmployeeDetailPage },
+          { path: 'reports', component: ReportsPage },
         ],
       },
       {
