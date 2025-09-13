@@ -14,6 +14,14 @@ export class ClientService {
   constructor(private http: HttpClient) {}
 
   /**
+   * Obtiene todos los clientes
+   * @returns lista de clientes
+   */
+  getAllClients(): Observable<Client[]> {
+    return this.http.get<Client[]>(`${this.clientPath}`);
+  }
+
+  /**
    * obtiene un cliente por id interno
    *
    * @param id identificador interno del cliente

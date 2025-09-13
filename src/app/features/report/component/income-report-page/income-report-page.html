@@ -1,0 +1,91 @@
+<div class="mb-4 flex flex-wrap items-end gap-3">
+  <div class="flex flex-wrap items-end gap-3">
+    <span class="text-sm text-gray-600">Establecimiento:</span>
+    <nz-select
+      nzAllowClear
+      nzPlaceHolder="Seleccione un establecimiento"
+      [(ngModel)]="selectedEstablishmentId"
+      name="establishmentFilter"
+      style="min-width: 280px"
+    >
+      @for (establishment of establishments; track establishment.id) {
+      <nz-option [nzValue]="establishment.id" [nzLabel]="establishment.name">
+      </nz-option>
+      }
+    </nz-select>
+  </div>
+  <div class="flex flex-wrap items-end gap-3">
+    <span class="text-sm text-gray-600">Rango de fechas:</span>
+    <nz-range-picker
+      [(ngModel)]="dateRange"
+      name="dateRange"
+      [nzFormat]="'dd/MM/yyyy'"
+    ></nz-range-picker>
+  </div>
+  <div class="ml-auto flex gap-2">
+    <button nz-button nzType="default" (click)="onQueryIncomeReport()">
+      <nz-icon nzType="search"></nz-icon>
+      Consultar
+    </button>
+    <button nz-button nzType="primary" (click)="onExportIncomeReport()">
+      <nz-icon nzType="download"></nz-icon>
+      Exportar PDF
+    </button>
+  </div>
+</div>
+
+@if (incomeReport) {
+<div class="bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div>
+      <p class="text-sm text-gray-500">Establecimiento</p>
+      <p class="text-lg font-bold text-gray-900">
+        {{ incomeReport.stablishmentName }}
+      </p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Desde</p>
+      <p class="text-lg font-bold text-gray-900">
+        {{ incomeReport.startAt }}
+      </p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Hasta</p>
+      <p class="text-lg font-bold text-gray-900">
+        {{ incomeReport.endAt }}
+      </p>
+    </div>
+    <div class="md:col-span-3">
+      <p class="text-sm text-gray-500">Total</p>
+      <p class="text-2xl font-extrabold text-[#fb9120]">
+        Q {{ incomeReport.total }}
+      </p>
+    </div>
+  </div>
+
+  <nz-divider nzText="Ingresos"></nz-divider>
+  <nz-table
+    #tableIncoming
+    [nzData]="incomeReport.items"
+    [nzPageSize]="10"
+    [nzScroll]="{ y: '200px', x: '200px' }"
+  >
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Concepto</th>
+        <th>Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of tableIncoming.data; track row.date) {
+      <tr>
+        <td>{{ row.date }}</td>
+        <td>{{ row.concept }}</td>
+        <td>Q {{ row.amount }}</td>
+      </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>
+}
