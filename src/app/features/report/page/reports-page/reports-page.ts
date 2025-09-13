@@ -23,6 +23,7 @@ import { ClientService } from '../../../client/service/client-service';
 import { IncomeReportPage } from "../../component/income-report-page/income-report-page";
 import { StayDiningReportPage } from "../../component/stay-dining-report-page/stay-dining-report-page";
 import { EmmployeeReportPage } from "../../component/emmployee-report-page/emmployee-report-page";
+import { MostPopularRoomReportPage } from "../../component/most-popular-room-report-page/most-popular-room-report-page";
 
 @Component({
   selector: 'app-reports-page',
@@ -40,7 +41,8 @@ import { EmmployeeReportPage } from "../../component/emmployee-report-page/emmpl
     FormsModule,
     IncomeReportPage,
     StayDiningReportPage,
-    EmmployeeReportPage
+    EmmployeeReportPage,
+    MostPopularRoomReportPage
 ],
   templateUrl: './reports-page.html',
   styleUrl: './reports-page.css',

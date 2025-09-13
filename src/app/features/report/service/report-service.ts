@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { EmployeeReport } from '../model/EmployeeReport';
 import { IncomeReport } from '../model/IncomeReport';
 import { StayDiningReport } from '../model/StayDiningReport';
+import { MostPopularRoomReport } from '../model/MostPopularRoomReport';
 
 @Injectable({ providedIn: 'root' })
 export class ReportService {
@@ -144,6 +145,41 @@ export class ReportService {
       httpParams = httpParams.set('establishmentId', params.establishmentId);
     }
     return this.http.get(`${this.path}/employees/by-establishment/export`, {
+      params: httpParams,
+      observe: 'response',
+      responseType: 'blob',
+    });
+  }
+
+  /**
+   * Obtiene el reporte de popularidad de una room
+   */
+  getMostPopularRoomReport(params: {
+    establishmentId: string | null;
+  }): Observable<MostPopularRoomReport> {
+    let httpParams = new HttpParams();
+
+    if (params.establishmentId) {
+      httpParams = httpParams.set('establishmentId', params.establishmentId);
+    }
+
+    return this.http.get<MostPopularRoomReport>(`${this.path}/most-popular-room`, {
+      params: httpParams,
+    });
+  }
+
+  /**
+   * Exporta a PDF  el reporte de popularidad de una room
+   */
+  exportMostPopularRoomReport(params: {
+    establishmentId: string | null;
+  }): Observable<HttpResponse<Blob>> {
+    let httpParams = new HttpParams();
+
+    if (params.establishmentId) {
+      httpParams = httpParams.set('establishmentId', params.establishmentId);
+    }
+    return this.http.get(`${this.path}/most-popular-room/export`, {
       params: httpParams,
       observe: 'response',
       responseType: 'blob',
