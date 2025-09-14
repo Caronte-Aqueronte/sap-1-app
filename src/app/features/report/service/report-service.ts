@@ -7,6 +7,7 @@ import { IncomeReport } from '../model/IncomeReport';
 import { StayDiningReport } from '../model/StayDiningReport';
 import { MostPopularRoomReport } from '../model/MostPopularRoomReport';
 import { MostPopularRestaurantReport } from '../model/MostPopularRestaurantReport';
+import { ProfitReport } from '../model/ProfitReport';
 
 @Injectable({ providedIn: 'root' })
 export class ReportService {
@@ -223,6 +224,23 @@ export class ReportService {
     }
     return this.http.get(`${this.path}/most-popular-restaurant/export`, {
       params: httpParams,
+      observe: 'response',
+      responseType: 'blob',
+    });
+  }
+
+  /**
+   * Obtiene el reporte de profit
+   */
+  getProfitReport(): Observable<ProfitReport> {
+    return this.http.get<ProfitReport>(`${this.path}/profit`);
+  }
+
+  /**
+   * Exporta a PDF  el reporte de profit
+   */
+  exportProfitReport(): Observable<HttpResponse<Blob>> {
+    return this.http.get(`${this.path}/profit/export`, {
       observe: 'response',
       responseType: 'blob',
     });

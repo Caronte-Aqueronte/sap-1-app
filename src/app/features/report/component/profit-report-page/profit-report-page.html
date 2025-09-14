@@ -1,0 +1,173 @@
+<div class="mb-4 flex flex-wrap items-end gap-3 justify-center">
+  <div class="flex gap-2">
+    <button nz-button nzType="default" (click)="onQuery()">
+      <nz-icon nzType="search"></nz-icon>
+      Consultar
+    </button>
+    <button nz-button nzType="primary" (click)="onExport()">
+      <nz-icon nzType="download"></nz-icon>
+      Exportar PDF
+    </button>
+  </div>
+</div>
+
+@if (profitReport) {
+<div class="bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
+  <!-- resumen -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <!-- ingresos -->
+    <div
+      class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
+    >
+      <p
+        class="text-[10px] uppercase tracking-wide text-gray-400 font-semibold"
+      >
+        ingresos totales
+      </p>
+      <p class="mt-2 text-3xl font-extrabold text-green-600 tabular-nums">
+        Q {{ profitReport.totalIncome }}
+      </p>
+    </div>
+
+    <!-- costos -->
+    <div
+      class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
+    >
+      <p
+        class="text-[10px] uppercase tracking-wide text-gray-400 font-semibold"
+      >
+        costos totales
+      </p>
+      <p class="mt-2 text-3xl font-extrabold text-red-600 tabular-nums">
+        Q {{ profitReport.totalCost }}
+      </p>
+    </div>
+
+    <!-- utilidad -->
+    <div
+      class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
+    >
+      <p
+        class="text-[10px] uppercase tracking-wide text-gray-400 font-semibold"
+      >
+        utilidad total
+      </p>
+      <p class="mt-2 text-3xl font-extrabold text-orange-500 tabular-nums">
+        Q {{ profitReport.totalProfit }}
+      </p>
+    </div>
+  </div>
+
+  <!-- ingresos -->
+  <nz-divider nzText="Ingresos"></nz-divider>
+  <nz-table
+    #tableIncomes
+    [nzData]="profitReport.incomes"
+    [nzPageSize]="10"
+    [nzScroll]="{ y: '240px', x: '600px' }"
+    nzBordered
+  >
+    <thead>
+      <tr>
+        <th class="w-40">Fecha</th>
+        <th>Concepto</th>
+        <th class="w-40 text-right">Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of tableIncomes.data; track $index) {
+      <tr>
+        <td>{{ row.date }}</td>
+        <td>{{ row.concept }}</td>
+        <td class="text-right">Q {{ row.amount }}</td>
+      </tr>
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2" class="text-right font-semibold">Total ingresos:</td>
+        <td class="text-right font-bold">Q {{ profitReport.totalIncome }}</td>
+      </tr>
+    </tfoot>
+    <ng-template #renderNoResult>
+      <div class="text-center text-gray-500 py-4">Sin ingresos registrados</div>
+    </ng-template>
+  </nz-table>
+
+  <!-- costos -->
+  <nz-divider nzText="Costos operativos"></nz-divider>
+  <nz-table
+    #tableCosts
+    [nzData]="profitReport.costs"
+    [nzPageSize]="10"
+    [nzScroll]="{ y: '240px', x: '600px' }"
+    nzBordered
+  >
+    <thead>
+      <tr>
+        <th class="w-40">Fecha</th>
+        <th>Concepto</th>
+        <th class="w-40 text-right">Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of tableCosts.data; track $index) {
+      <tr>
+        <td>{{ row.date }}</td>
+        <td>{{ row.concept }}</td>
+        <td class="text-right">Q {{ row.amount }}</td>
+      </tr>
+      }
+    </tbody>
+    <ng-template #renderNoResult>
+      <div class="text-center text-gray-500 py-4">
+        Sin costos operativos registrados.
+      </div>
+    </ng-template>
+  </nz-table>
+
+  <!-- pagos a empleados -->
+  <nz-divider nzText="Pagos a empleados"></nz-divider>
+  <nz-table
+    #tablePayments
+    [nzData]="profitReport.payments"
+    [nzPageSize]="10"
+    [nzScroll]="{ y: '240px', x: '900px' }"
+    nzBordered
+  >
+    <thead>
+      <tr>
+        <th class="w-44">Fecha de pago</th>
+        <th class="min-w-56">Empleado</th>
+        <th class="w-48">CUI</th>
+        <th class="w-40 text-right">Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of tablePayments.data; track row.id) {
+      <tr>
+        <td>{{ row.payedAtStr }}</td>
+        <td>{{ row.employeeName }}</td>
+        <td>{{ row.employeeNationalId }}</td>
+        <td class="text-right">Q {{ row.amount }}</td>
+      </tr>
+      }
+    </tbody>
+    <ng-template #renderNoResult>
+      <div class="text-center text-gray-500 py-4">Sin pagos registrados.</div>
+    </ng-template>
+  </nz-table>
+
+  <!-- total combinado -->
+  <div class="flex justify-end mt-4">
+    <div class="text-right">
+      <p class="font-semibold">
+        Total costos:
+        <span class="font-bold text-red-600">
+          Q {{ profitReport.totalCost }}
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+}

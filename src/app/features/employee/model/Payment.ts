@@ -3,5 +3,6 @@ export interface Payment {
   amount: number;
   payedAt: string;
   payedAtStr: string;
+  employeeName: string;
+  employeeNationalId: string;
 }
-

@@ -25,6 +25,7 @@ import { StayDiningReportPage } from "../../component/stay-dining-report-page/st
 import { EmmployeeReportPage } from "../../component/emmployee-report-page/emmployee-report-page";
 import { MostPopularRoomReportPage } from "../../component/most-popular-room-report-page/most-popular-room-report-page";
 import { MostPopularRestaurantReportPage } from "../../component/most-popular-restaurant-report-page/most-popular-restaurant-report-page";
+import { ProfitReportPage } from "../../component/profit-report-page/profit-report-page";
 
 @Component({
   selector: 'app-reports-page',
@@ -44,7 +45,8 @@ import { MostPopularRestaurantReportPage } from "../../component/most-popular-re
     StayDiningReportPage,
     EmmployeeReportPage,
     MostPopularRoomReportPage,
-    MostPopularRestaurantReportPage
+    MostPopularRestaurantReportPage,
+    ProfitReportPage
 ],
   templateUrl: './reports-page.html',
   styleUrl: './reports-page.css',
