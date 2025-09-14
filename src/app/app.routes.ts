@@ -22,6 +22,7 @@ import { BookingsPage } from './features/booking/page/bookings-page/bookings-pag
 import { EmployeesPage } from './features/employee/page/employees-page/employees-page';
 import { EmployeeDetailPage } from './features/employee/page/employee-detail-page/employee-detail-page';
 import { ReportsPage } from './features/report/page/reports-page/reports-page';
+import { HomePage } from './features/dashboard/component/home-page/home-page';
 
 export const routes: Routes = [
   {
@@ -52,12 +53,16 @@ export const routes: Routes = [
         path: 'admin',
         component: AdminDashBoard,
         children: [
+          { path: '', pathMatch: 'full', redirectTo: 'home' },
           { path: 'hotel', component: HotelsPage },
           {
             path: 'hotel-detail/:id',
             component: HotelDetailPage,
           },
-
+          {
+            path: 'home',
+            component: HomePage,
+          },
           { path: 'restaurant', component: RestaurantPage },
           { path: 'restaurant-detail/:id', component: RestaurantDetailPage },
           { path: 'promotions', component: PromotionAdminPanel },
@@ -70,9 +75,14 @@ export const routes: Routes = [
         path: 'staff',
         component: StaffDashBoard,
         children: [
+          { path: '', pathMatch: 'full', redirectTo: 'home' },
           { path: 'orders', component: OrderPage },
           { path: 'orders/:id', component: OrderDetailPage },
           { path: 'bookings', component: BookingsPage },
+          {
+            path: 'home',
+            component: HomePage,
+          },
         ],
       },
     ],

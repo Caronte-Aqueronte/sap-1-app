@@ -1,0 +1,10 @@
+<div class="hp-center">
+  <img [src]="logoSrc" alt="logo" class="hp-logo" />
+
+  <div class="hp-clock">
+    <div class="hp-time">{{ now | date : "HH:mm:ss" }}</div>
+    <div class="hp-date">{{ now | date : "EEEE, d 'de' MMMM 'de' y" }}</div>
+  </div>
+
+  <h1 class="hp-welcome">Bienvenido</h1>
+</div>
