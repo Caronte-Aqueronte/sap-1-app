@@ -1,0 +1,92 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>
+    <span class="inline-flex items-center gap-2">
+      <nz-icon nzType="team" nzTheme="outline" class="text-[#fb9120]"></nz-icon>
+      <span class="font-bold text-gray-900">Detalle de Empleado</span>
+    </span>
+  </nz-page-header-title>
+  <nz-page-header-subtitle>
+    <span class="text-gray-900">Información general y pagos del empleado.</span>
+  </nz-page-header-subtitle>
+</nz-page-header>
+
+<div class="mt-6 flex justify-center">
+  @if (employee) {
+  <div
+    class="bg-white shadow-xl rounded-2xl p-8 border border-gray-200 w-full md:w-[75vw]"
+  >
+    <!-- Sección información -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-[#012e5c]">
+        Información del Empleado
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+      <div>
+        <p class="text-sm font-medium text-gray-500">Nombre</p>
+        <p class="text-lg text-gray-900 font-bold">
+          {{ employee.firstName }} {{ employee.lastName }}
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500">DPI</p>
+        <p class="text-lg text-gray-900 font-bold">
+          {{ employee.nationalId }}
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500">Establecimiento</p>
+        <p class="text-lg text-gray-900 font-bold">
+          {{ employee.establishmentName }}
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500">Salario</p>
+        <p class="text-lg font-extrabold text-[#fb9120]">
+          Q {{ employee.salary }}
+        </p>
+      </div>
+
+      <!-- Sección de pagos -->
+      <div class="col-span-full">
+        <nz-divider nzText="Pagos"></nz-divider>
+      </div>
+
+      <!-- Botón nuevo pago arriba de la tabla -->
+      <div class="col-span-full flex justify-end">
+        <button
+          nz-button
+          nzType="default"
+          (click)="onCreatePayment()"
+        >
+          <span class="flex items-center gap-2">
+            <nz-icon nzType="plus" nzTheme="outline"></nz-icon>
+            Nuevo pago
+          </span>
+        </button>
+      </div>
+
+      <!-- Tabla de pagos -->
+      <div class="col-span-full">
+        <nz-table #tablePayment [nzData]="employee.payments" [nzPageSize]="10">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Monto</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (payment of tablePayment.data; track payment.id) {
+            <tr>
+              <td>{{ payment.payedAtStr }}</td>
+              <td>Q {{ payment.amount }}</td>
+            </tr>
+            }
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+  }
+</div>

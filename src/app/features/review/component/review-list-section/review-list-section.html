@@ -1,0 +1,17 @@
+<div class="col-span-full">
+  <nz-divider nzText="Opiniones De Nuestros Clientes"></nz-divider>
+
+</div>
+
+<div class="mt-4 w-full md:w-[75vw] mx-auto">
+  @if (reviews.length === 0) {
+    <div class="text-gray-500 italic">Aun no hay opiniones.</div>
+  } @else {
+    <div class="grid grid-cols-1 max-h-[200px] overflow-y-auto pr-2">
+      @for (review of reviews; track review.id) {
+        <app-review-card [review]="review"></app-review-card>
+      }
+    </div>
+  }
+</div>
+

@@ -1,0 +1,76 @@
+<div class="max-h-[200px] overflow-y-auto">
+  <form nz-form [formGroup]="formMenuItem">
+    <!-- Nombre -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="name">
+        Nombre
+      </nz-form-label>
+      <nz-form-control
+        nzErrorTip="El nombre es obligatorio y máx 100 caracteres"
+      >
+        <input nz-input formControlName="name" class="w-40" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Descripción -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="description">
+        Descripción
+      </nz-form-label>
+      <nz-form-control
+        nzErrorTip="La descripción es obligatoria y máx 255 caracteres"
+      >
+        <textarea
+          nz-input
+          formControlName="description"
+          rows="3"
+          class="w-60"
+          id="description"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Precio -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="price">
+        Precio
+      </nz-form-label>
+      <nz-form-control nzErrorTip="El precio debe ser mayor a 0.01">
+        <input
+          type="number"
+          nz-input
+          formControlName="price"
+          step="0.01"
+          class="w-32"
+          id="price"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Costo -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="cost">
+        Costo
+      </nz-form-label>
+      <nz-form-control nzErrorTip="El costo debe ser ≥ 0">
+        <input
+          type="number"
+          nz-input
+          formControlName="cost"
+          step="0.01"
+          class="w-32"
+          id="cost"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<!--Botones-->
+<div *nzModalFooter>
+  <div class="steps-action">
+    <button nz-button nzType="primary" (click)="onSubmit()" [disabled]="formMenuItem.invalid">
+      <nz-icon nzType="edit"></nz-icon> Editar Platillo
+    </button>
+  </div>
+</div>

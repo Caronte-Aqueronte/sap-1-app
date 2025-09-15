@@ -1,0 +1,29 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title> Reportes </nz-page-header-title>
+  <nz-page-header-subtitle>
+    Centro de reportes y consultas
+  </nz-page-header-subtitle>
+</nz-page-header>
+
+<nz-tabs>
+  <nz-tab nzTitle="Ingresos por establecimiento">
+    <app-income-report-page></app-income-report-page>
+  </nz-tab>
+
+  <nz-tab nzTitle="Cliente (alojamientos y consumos)">
+    <app-stay-dining-report-page></app-stay-dining-report-page>
+  </nz-tab>
+
+  <nz-tab nzTitle="Empleados y Pagos por Establecimiento">
+    <app-emmployee-report-page></app-emmployee-report-page>
+  </nz-tab>
+  <nz-tab nzTitle="Ganancias">
+    <app-profit-report-page></app-profit-report-page>
+  </nz-tab>
+  <nz-tab nzTitle="Habitación más popular">
+    <app-most-popular-room-report-page></app-most-popular-room-report-page>
+  </nz-tab>
+  <nz-tab nzTitle="Restaurante más popular">
+    <app-most-popular-restaurant-report-page></app-most-popular-restaurant-report-page>
+  </nz-tab>
+</nz-tabs>

@@ -1,0 +1,67 @@
+<div class="min-h-screen flex flex-col">
+  <header class="sticky top-0 left-0 right-0 z-50 bg-[#012e5c] text-white">
+    <div
+      class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+    >
+      <div class="flex items-center gap-3">
+        <button nz-button nzType="primary" nzSize="large" (click)="goLogin()">
+          <nz-icon nzType="user" />
+          Ingresar
+        </button>
+
+        <button nz-button nzType="link" nzSize="large" (click)="goBookings()">
+          <nz-icon nzType="calendar" />
+          Reservar
+        </button>
+
+        <button nz-button nzType="link" nzSize="large" (click)="goHotels()">
+          <nz-icon nzType="home" />
+          Nuestros Hoteles
+        </button>
+
+        <button nz-button nzType="link" nzSize="large" (click)="goRestaurants()">
+          <nz-icon nzType="appstore" />
+          Nuestros Restaurantes
+        </button>
+      </div>
+      <div class="flex items-center gap-3">
+        <img src="/img/logo2.png" alt="Comer y Dormir" class="h-8" />
+      </div>
+    </div>
+  </header>
+
+  <!-- contenido dinámico -->
+  <main class="flex-1">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- footer fijo abajo -->
+  <footer class="bg-[#012e5c] text-white">
+    <div
+      class="mx-auto max-w-7xl px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6"
+    >
+      <!-- logo-->
+      <div class="flex items-center gap-4">
+        <img
+          src="/img/logo2.png"
+          alt="Comer y Dormir"
+          class="h-10 md:h-12 drop-shadow-lg"
+        />
+      </div>
+
+      <!-- frase -->
+      <p
+        class="text-center md:text-right text-white/80 text-sm md:text-base italic"
+      >
+        “Donde cada estancia se convierte en una experiencia inolvidable.”
+      </p>
+    </div>
+
+    <!-- línea -->
+    <div
+      class="mt-6 border-t border-white/20 pt-4 text-center text-xs text-white/60"
+    >
+      © 2025 Comer y Dormir — Todos los derechos reservados
+    </div>
+  </footer>
+</div>

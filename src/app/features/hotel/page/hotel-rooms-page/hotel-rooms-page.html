@@ -1,0 +1,18 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title
+    >Habitaciones de @if(hotel){
+    {{ hotel.name }}
+    }@else { Hotel }
+  </nz-page-header-title>
+  <nz-page-header-subtitle>Listado de habitaciones</nz-page-header-subtitle>
+</nz-page-header>
+
+<div
+  class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 p-10"
+>
+  @for (room of rooms; track room) {
+  <app-room-card [room]="room" (view)="onViewRoom(room)"></app-room-card>
+  } @empty {
+  <div class="text-gray-600">No hay habitaciones para este hotel.</div>
+  }
+</div>

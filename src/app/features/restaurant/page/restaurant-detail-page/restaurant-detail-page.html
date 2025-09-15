@@ -1,0 +1,105 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>
+    @if (rest) {
+    <nz-page-header-title>
+      {{ rest.name }}
+    </nz-page-header-title>
+    } @else {
+    <nz-page-header-title> Detalle del restaurante </nz-page-header-title>
+    }
+  </nz-page-header-title>
+</nz-page-header>
+
+<div class="mt-4">
+  @if (rest) {
+  <div class="bg-white shadow rounded-lg p-6 border border-gray-200">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">
+      Información del Resturante
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+      <!-- Nombre -->
+      <div>
+        <p class="text-sm font-medium text-gray-500">Nombre</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ rest.name }}
+        </p>
+      </div>
+
+      <!-- Dirección -->
+      <div>
+        <p class="text-sm font-medium text-gray-500">Dirección</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ rest.address }}
+        </p>
+      </div>
+
+      <!-- Teléfono -->
+      <div>
+        <p class="text-sm font-medium text-gray-500">Teléfono</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ rest.phoneNumber }}
+        </p>
+      </div>
+
+      <div>
+        <p class="text-sm font-medium text-gray-500">Hotel</p>
+        <p class="text-base text-gray-900 font-semibold">
+          @if(rest.hotel){
+          {{ rest.hotel.name }}
+          }@else { -- }
+        </p>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+<!-- Divider -->
+<nz-divider nzText="Platillos"></nz-divider>
+
+<!-- Botón de nueva habitación -->
+<div class="flex justify-end mb-3">
+  <button nz-button nzType="default" (click)="onCreateMenuItem()">
+    <nz-icon nzType="plus"></nz-icon> Nuevo Platillo
+  </button>
+</div>
+<nz-table
+  #basicTable
+  [nzData]="menu"
+  [nzBordered]="true"
+  [nzFrontPagination]="false"
+  [nzScroll]="{ y: '240px' }"
+>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripcion</th>
+      <th>Precio</th>
+      <th>Costo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (itemMenu of menu; track $index) {
+    <tr>
+      <td>{{ itemMenu.name }}</td>
+      <td>{{ itemMenu.description }}</td>
+      <td>{{ itemMenu.price }}</td>
+      <td>{{ itemMenu.cost }}</td>
+      <td>
+        <div class="flex gap-2">
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="circle"
+            (click)="onUpdateMenuItem(itemMenu)"
+          >
+            <nz-icon nzType="edit"></nz-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</nz-table>

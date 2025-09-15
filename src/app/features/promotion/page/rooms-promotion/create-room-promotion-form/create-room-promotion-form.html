@@ -1,0 +1,72 @@
+<!-- Contenedor scrollable de toda la ventana -->
+<div class="max-h-[60vh] overflow-y-auto p-2 space-y-4">
+  <!-- Selector de hotel -->
+  <nz-form-item>
+    <nz-form-label nzFor="hotel" nzRequired>Hotel</nz-form-label>
+    <nz-form-control nzErrorTip="Seleccione un hotel">
+      <nz-select
+        id="hotel"
+        nzPlaceHolder="Seleccione un hotel"
+        (ngModelChange)="onHotelChange($event)"
+        [(ngModel)]="selectedHotelId"
+        name="hotelId"
+      >
+        @for (hotel of hotels; track hotel.id) {
+        <nz-option [nzValue]="hotel.id" [nzLabel]="hotel.name"></nz-option>
+        }
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Panel habitación más popular -->
+  <div class="mb-4">
+    @if (mostPopularRoom) {
+    <div class="p-5 bg-white border border-gray-200 rounded-2xl shadow-md">
+      <!-- encabezado -->
+      <div class="flex items-center gap-2 mb-2">
+        <nz-icon
+          nzType="fire"
+          nzTheme="twotone"
+          class="text-[#fb9120] text-xl"
+        ></nz-icon>
+        <span class="text-lg font-bold text-gray-800">
+          Habitación más popular
+        </span>
+      </div>
+
+      <!-- contenido -->
+      <div class="space-y-2 text-sm text-gray-600">
+        <p>
+          Se detectó que la habitación
+          <span class="font-semibold text-[#012e5c]">
+            {{ mostPopularRoom.roomName }}
+          </span>
+          es la más popular del hotel.
+        </p>
+
+        <!-- reservas -->
+        <div class="flex items-center gap-2">
+          <nz-icon nzType="profile" class="text-[#fb9120]"></nz-icon>
+          <span class="text-sm font-medium text-gray-700">
+            {{ mostPopularRoom.totalBookings }} reservas
+          </span>
+        </div>
+
+        <p class="text-xs text-gray-500">
+          La promoción se aplicará automáticamente a esta habitación.
+        </p>
+      </div>
+    </div>
+    }
+  </div>
+
+  <form nz-form [formGroup]="form">
+    <app-promotion-base-form [form]="form"></app-promotion-base-form>
+    <div *nzModalFooter>
+      <button nz-button nzType="primary" (click)="onSubmit()">
+        <nz-icon nzType="plus"></nz-icon>
+        Guardar promoción
+      </button>
+    </div>
+  </form>
+</div>

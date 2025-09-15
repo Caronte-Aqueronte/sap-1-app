@@ -1,0 +1,55 @@
+<nz-page-header nzBackIcon [nzGhost]="false">
+  <nz-page-header-title>Detalle del Restaurante</nz-page-header-title>
+  <nz-page-header-subtitle>Información general</nz-page-header-subtitle>
+</nz-page-header>
+
+<div class="flex justify-center">
+  @if (restaurant) {
+  <div
+    class="mt-4 bg-white shadow rounded-lg p-6 border border-gray-200 w-[74vw]"
+  >
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">
+      Información del Restaurante
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+      <div>
+        <p class="text-sm font-medium text-gray-500">Nombre</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ restaurant.name }}
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500">Dirección</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ restaurant.address }}
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500">Teléfono</p>
+        <p class="text-base text-gray-900 font-semibold">
+          {{ restaurant.phoneNumber }}
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500">Hotel</p>
+        <p class="text-base text-gray-900 font-semibold">
+          @if(restaurant.hotel){ {{ restaurant.hotel.name }} }@else{ -- }
+        </p>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+@if (restaurant) {
+<!-- Secciones de reviews reutilizadas -->
+<app-review-list-section
+  #reviewList
+  [targetId]="restaurant.id"
+></app-review-list-section>
+<app-review-comment-form
+  [targetId]="restaurant.id"
+  [targetType]="'restaurant'"
+  (submitted)="reviewList.refresh()"
+></app-review-comment-form>
+}

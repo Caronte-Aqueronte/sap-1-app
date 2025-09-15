@@ -1,0 +1,136 @@
+<form
+  nz-form
+  [nzLayout]="'vertical'"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
+  <!-- Establecimiento -->
+  <nz-form-item>
+    <nz-form-label nzRequired nzFor="establishmentId"
+      >Establecimiento</nz-form-label
+    >
+    <nz-form-control [nzErrorTip]="establishmentErrorTpl">
+      <nz-select
+        id="establishmentId"
+        formControlName="establishmentId"
+        nzPlaceHolder="Seleccione un establecimiento"
+      >
+        @for (establishment of data.establishments; track establishment.id) {
+        <nz-option [nzValue]="establishment.id" [nzLabel]="establishment.name">
+        </nz-option>
+        }
+      </nz-select>
+      <ng-template #establishmentErrorTpl let-control>
+        @if (control.hasError('required')) {
+        <span>Debe seleccionar un establecimiento</span>
+        }
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Grid de inputs -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Nombres -->
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="firstName">Nombres</nz-form-label>
+      <nz-form-control [nzErrorTip]="firstNameErrorTpl">
+        <nz-input-group nzPrefixIcon="user">
+          <input
+            id="firstName"
+            nz-input
+            formControlName="firstName"
+            placeholder="Ingrese nombres"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+        <ng-template #firstNameErrorTpl let-control>
+          @if (control.hasError('required')) {
+          <span>El nombre es obligatorio</span>
+          } @if (control.hasError('maxlength')) {
+          <span>Máximo 50 caracteres</span>
+          }
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Apellidos -->
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="lastName">Apellidos</nz-form-label>
+      <nz-form-control [nzErrorTip]="lastNameErrorTpl">
+        <nz-input-group nzPrefixIcon="team">
+          <input
+            id="lastName"
+            nz-input
+            formControlName="lastName"
+            placeholder="Ingrese apellidos"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+        <ng-template #lastNameErrorTpl let-control>
+          @if (control.hasError('required')) {
+          <span>Los apellidos son obligatorios</span>
+          } @if (control.hasError('maxlength')) {
+          <span>Máximo 50 caracteres</span>
+          }
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- DPI -->
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="nationalId">DPI</nz-form-label>
+      <nz-form-control [nzErrorTip]="nationalIdErrorTpl">
+        <nz-input-group nzPrefixIcon="idcard">
+          <input
+            id="nationalId"
+            nz-input
+            formControlName="nationalId"
+            placeholder="Número de DPI"
+            class="rounded-lg bg-white/70 text-gray-900 placeholder-gray-500"
+          />
+        </nz-input-group>
+        <ng-template #nationalIdErrorTpl let-control>
+          @if (control.hasError('required')) {
+          <span>El DPI es obligatorio</span>
+          } @if (control.hasError('minlength') || control.hasError('maxlength'))
+          {
+          <span>El DPI debe tener exactamente 13 dígitos</span>
+          }
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Salario -->
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="salary">Salario</nz-form-label>
+      <nz-form-control [nzErrorTip]="salaryErrorTpl">
+        <nz-input-group [nzAddOnBefore]="salaryIcon">
+          <nz-input-number
+            id="salary"
+            formControlName="salary"
+            [nzMin]="1"
+            [nzStep]="1"
+            class="w-full"
+          />
+        </nz-input-group>
+        <ng-template #salaryIcon>
+          <nz-icon nzType="dollar"></nz-icon>
+        </ng-template>
+        <ng-template #salaryErrorTpl let-control>
+          @if (control.hasError('required')) {
+          <span>El salario es obligatorio</span>
+          } @if (control.hasError('min')) {
+          <span>El salario debe ser mayor a 0</span>
+          }
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
+
+<!-- Botones -->
+<div *nzModalFooter>
+  <button nz-button nzType="primary" (click)="onSubmit()">
+    <nz-icon nzType="plus"></nz-icon> Guardar Empleado
+  </button>
+</div>

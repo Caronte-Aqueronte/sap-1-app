@@ -1,0 +1,140 @@
+<main class="relative min-h-screen">
+  <section
+    class="relative min-h-[75vh] flex items-center justify-center text-white"
+  >
+    <div
+      class="absolute inset-0 -z-10 bg-cover bg-center"
+      style="background-image: url('/img/cuarto.jpeg')"
+    ></div>
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/30 to-primary/70"
+    ></div>
+
+    <div
+      class="w-full max-w-xl min-h-[300px] rounded-2xl p-6 bg-white/20 backdrop-blur-md border border-white/30 shadow-lg"
+    >
+      <p class="text-xl md:text-2xl font-semibold text-center text-white mb-6">
+        Reserva tu próxima experiencia: hoteles modernos, gastronomía única y el
+        descanso que mereces.
+      </p>
+
+      <!-- Card de busqueda -->
+      <div class="">
+        <form
+          nz-form
+          [nzLayout]="'vertical'"
+          [formGroup]="bookingSearchForm"
+          (ngSubmit)="search()"
+        >
+          <!-- hotel -->
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Selecciona un hotel">
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Seleccione un hotel"
+                formControlName="hotel"
+                nzSize="large"
+              >
+                @for (hotel of hotels; track $index) {
+                <nz-option [nzValue]="hotel.id" [nzLabel]="hotel.name">
+                </nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- check-in -->
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Selecciona fecha de entrada">
+              <nz-date-picker
+                formControlName="checkIn"
+                class="w-full"
+                nzSize="large"
+                nzFormat="dd/MM/yyyy"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- check-out -->
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Selecciona fecha de salida">
+              <nz-date-picker
+                formControlName="checkOut"
+                class="w-full"
+                nzSize="large"
+                nzFormat="dd/MM/yyyy"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+
+          <button
+            nz-button
+            nzType="primary"
+            [disabled]="!bookingSearchForm.valid"
+            nzSize="large"
+          >
+            <nz-icon nzType="search" />
+            Buscar
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seccion extra -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-16 grid md:grid-cols-3 gap-8">
+      <div class="rounded-2xl overflow-hidden">
+        <img
+          class="w-full h-48 object-cover"
+          src="/img/insta.avif"
+          alt="habitaciones"
+        />
+        <div class="p-5">
+          <h3 class="text-xl font-bold text-primary mb-2">
+            Instalaciones modernas
+          </h3>
+          <p class="text-slate-600">
+            Disfruta de espacios contemporáneos, equipados con tecnología de
+            última generación y un diseño pensado para tu comodidad.
+          </p>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden">
+        <img
+          class="w-full h-48 object-cover"
+          src="/img/comida.avif"
+          alt="gastronomia"
+        />
+        <div class="p-5">
+          <h3 class="text-xl font-bold text-primary mb-2">Gastronomía local</h3>
+          <p class="text-slate-600">
+            Un viaje sensorial a través de sabores auténticos, creados con
+            productos frescos de temporada y la esencia de nuestra tierra.
+          </p>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden">
+        <img
+          class="w-full h-48 object-cover"
+          src="/img/ubi.avif"
+          alt="ubicacion"
+        />
+        <div class="p-5">
+          <h3 class="text-xl font-bold text-primary mb-2">
+            Ubicaciones estratégicas
+          </h3>
+          <p class="text-slate-600">
+            Conéctate con lo esencial desde lugares privilegiados, donde cada
+            destino está al alcance y los traslados se vuelven parte de la
+            experiencia.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

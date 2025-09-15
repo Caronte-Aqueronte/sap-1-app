@@ -1,0 +1,119 @@
+<nz-page-header
+  nzBackIcon
+  [nzGhost]="false"
+  class="bg-white border-b border-blue-100"
+>
+  <nz-page-header-title>
+    <span class="inline-flex items-center gap-2">
+      <nz-icon
+        nzType="calendar"
+        nzTheme="outline"
+        class="text-[#fb9120]"
+      ></nz-icon>
+      <span class="font-bold text-gray-900">Reservar habitación</span>
+    </span>
+  </nz-page-header-title>
+  <nz-page-header-subtitle>
+    <span class="text-gray-900">
+      Selecciona una habitación disponible para completar tu reserva
+    </span>
+  </nz-page-header-subtitle>
+</nz-page-header>
+
+<section class="flex-1 bg-gradient-to-b from-blue-50 to-white">
+  <div class="mx-auto max-w-7xl px-4 py-6">
+    <!-- barra de fechas -->
+    <div class="mb-6 rounded-2xl border border-blue-200 bg-white p-4">
+      <div
+        class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+      >
+        <div class="flex flex-wrap items-center gap-3">
+          <span
+            class="rounded-xl border border-blue-300 bg-white px-3 py-1 text-sm font-medium text-gray-900"
+          >
+            Desde: <span class="font-bold">{{ displayCheckIn }}</span>
+          </span>
+          <span class="text-blue-400">-</span>
+          <span
+            class="rounded-xl border border-blue-300 bg-white px-3 py-1 text-sm font-medium text-gray-900"
+          >
+            Hasta: <span class="font-bold">{{ displayCheckOut }}</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span
+            class="hidden md:inline-block h-2 w-24 rounded-full bg-[#fb9120]"
+          ></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- layout -->
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <!-- resumen -->
+      <aside class="lg:col-span-4">
+        <div class="rounded-2xl border border-blue-200 bg-white p-5 shadow-sm">
+          <h3 class="mb-4 text-lg font-bold text-gray-900">Tu elección</h3>
+          <div class="space-y-4">
+            <div class="rounded-xl border border-blue-100 bg-blue-50 p-4">
+              <p class="text-sm font-semibold text-gray-900">Hotel</p>
+              <p class="text-base font-bold text-gray-900">
+                @if(hotel){ {{ hotel.name }} } @else { Hotel }
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-xl border border-blue-100 bg-white p-3">
+                <p class="text-xs font-semibold text-gray-900">Check-in</p>
+                <p class="text-sm font-bold text-gray-900">
+                  {{ displayCheckIn }}
+                </p>
+              </div>
+              <div class="rounded-xl border border-blue-100 bg-white p-3">
+                <p class="text-xs font-semibold text-gray-900">Check-out</p>
+                <p class="text-sm font-bold text-gray-900">
+                  {{ displayCheckOut }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- resultados -->
+      <main class="lg:col-span-8">
+        <div class="mb-3 flex items-center justify-between">
+          <h2 class="text-xl font-bold text-gray-900">
+            Habitaciones disponibles
+          </h2>
+        </div>
+
+        @if (!results || results.length === 0) {
+        <div
+          class="rounded-2xl border border-dashed border-blue-200 bg-white p-10 text-center shadow-sm"
+        >
+          <p class="text-sm font-medium text-gray-900">
+            No hay habitaciones disponibles para el rango seleccionado
+          </p>
+        </div>
+        } @if (results && results.length > 0) {
+        <div class="mb-4 text-sm font-medium text-gray-900">
+          {{ results.length }} opciones encontradas
+        </div>
+
+        <!-- contenedor con scroll -->
+        <div
+          class="grid grid-cols-1 gap-5 sm:grid-cols-2 max-h-[45vh] overflow-y-auto pr-2"
+        >
+          @for (room of results; track room.id) {
+          <app-room-booking-card
+            [room]="room"
+            (reserve)="onReserve($event)"
+          ></app-room-booking-card>
+          }
+        </div>
+        }
+      </main>
+    </div>
+  </div>
+</section>

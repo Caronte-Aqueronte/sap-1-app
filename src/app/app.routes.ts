@@ -1,3 +1,100 @@
 import { Routes } from '@angular/router';
+import { AdminDashBoard } from './features/dashboard/admin/page/admin-dash-board/admin-dash-board';
+import { StaffDashBoard } from './features/dashboard/staff/page/staff-dash-board/staff-dash-board';
+import { HotelDetailPage } from './features/hotel/page/hotel-detail-page/hotel-detail-page';
+import { HotelsPage } from './features/hotel/page/hotels-page/hotels-page';
+import { LandingPage } from './features/landing/page/landing-page/landing-page';
+import { LoginPage } from './features/login/page/login-page/login-page';
+import { RestaurantDetailPage } from './features/restaurant/page/restaurant-detail-page/restaurant-detail-page';
+import { RestaurantPage } from './features/restaurant/page/restaurant-page/restaurant-page';
+import { SearchResultsComponent } from './features/booking/page/search-results-component/search-results-component';
+import { RoomBookingDetail } from './features/booking/page/room-booking-detail/room-booking-detail';
+import { InfoSection } from './features/landing/component/info-section/info-section';
+import { HotelsExplorePage } from './features/hotel/page/hotels-explore-page/hotels-explore-page';
+import { HotelRoomsPage } from './features/hotel/page/hotel-rooms-page/hotel-rooms-page';
+import { RoomDetailPage } from './features/room/page/room-detail-page/room-detail-page';
+import { RestaurantsExplorePage } from './features/restaurant/page/restaurants-explore-page/restaurants-explore-page';
+import { RestaurantPublicDetailPage } from './features/restaurant/page/restaurant-public-detail-page/restaurant-public-detail-page';
+import { PromotionAdminPanel } from './features/promotion/page/promotion-admin-panel/promotion-admin-panel';
+import { OrderPage } from './features/order/page/order-page/order-page';
+import { OrderDetailPage } from './features/order/page/order-detail-page/order-detail-page';
+import { BookingsPage } from './features/booking/page/bookings-page/bookings-page';
+import { EmployeesPage } from './features/employee/page/employees-page/employees-page';
+import { EmployeeDetailPage } from './features/employee/page/employee-detail-page/employee-detail-page';
+import { ReportsPage } from './features/report/page/reports-page/reports-page';
+import { HomePage } from './features/dashboard/component/home-page/home-page';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginPage,
+  },
+
+  {
+    path: 'landing',
+    component: LandingPage,
+    children: [
+      { path: 'search-results', component: SearchResultsComponent },
+      { path: 'room-booking-detail/:id', component: RoomBookingDetail },
+      { path: 'hotels-explore', component: HotelsExplorePage },
+      { path: 'hotel/:id/rooms', component: HotelRoomsPage },
+      { path: 'restaurants-explore', component: RestaurantsExplorePage },
+      { path: 'restaurant/:id/detail', component: RestaurantPublicDetailPage },
+      { path: 'room-detail/:id', component: RoomDetailPage },
+      { path: 'info-section', component: InfoSection },
+      { path: '', redirectTo: 'info-section', pathMatch: 'full' },
+    ],
+  },
+
+  {
+    path: 'dashboard',
+    children: [
+      {
+        path: 'admin',
+        component: AdminDashBoard,
+        children: [
+          { path: '', pathMatch: 'full', redirectTo: 'home' },
+          { path: 'hotel', component: HotelsPage },
+          {
+            path: 'hotel-detail/:id',
+            component: HotelDetailPage,
+          },
+          {
+            path: 'home',
+            component: HomePage,
+          },
+          { path: 'restaurant', component: RestaurantPage },
+          { path: 'restaurant-detail/:id', component: RestaurantDetailPage },
+          { path: 'promotions', component: PromotionAdminPanel },
+          { path: 'employees', component: EmployeesPage },
+          { path: 'employee/:id', component: EmployeeDetailPage },
+          { path: 'reports', component: ReportsPage },
+        ],
+      },
+      {
+        path: 'staff',
+        component: StaffDashBoard,
+        children: [
+          { path: '', pathMatch: 'full', redirectTo: 'home' },
+          { path: 'orders', component: OrderPage },
+          { path: 'orders/:id', component: OrderDetailPage },
+          { path: 'bookings', component: BookingsPage },
+          {
+            path: 'home',
+            component: HomePage,
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    path: '',
+    redirectTo: 'landing',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: 'landing',
+  },
+];

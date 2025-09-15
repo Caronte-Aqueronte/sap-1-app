@@ -1,0 +1,102 @@
+<div [formGroup]="form">
+  <!-- Nombre -->
+  <nz-form-item>
+    <nz-form-label nzRequired nzFor="name">Nombre</nz-form-label>
+    <nz-form-control [nzErrorTip]="nameErrorTpl">
+      <nz-input-group [nzPrefix]="prefixName">
+        <input
+          id="name"
+          nz-input
+          formControlName="name"
+          placeholder="Nombre de la promoción"
+        />
+      </nz-input-group>
+      <ng-template #prefixName>
+        <nz-icon nzType="tag"></nz-icon>
+      </ng-template>
+
+      <ng-template #nameErrorTpl let-control>
+        @if (control.hasError('required')) {
+          <span>El nombre es obligatorio</span>
+        }
+        @if (control.hasError('maxlength')) {
+          <span>El nombre no debe exceder 100 caracteres</span>
+        }
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- % Descuento -->
+  <nz-form-item>
+    <nz-form-label nzRequired nzFor="discount">% Descuento</nz-form-label>
+    <nz-form-control [nzErrorTip]="discountErrorTpl">
+      <nz-input-group [nzAddOnBefore]="discountIcon">
+        <nz-input-number
+          id="discount"
+          formControlName="discountPercent"
+          [nzMin]="1"
+          [nzMax]="100"
+          [nzStep]="1"
+        />
+      </nz-input-group>
+      <ng-template #discountIcon>
+        <nz-icon nzType="percentage"></nz-icon>
+      </ng-template>
+
+      <ng-template #discountErrorTpl let-control>
+        @if (control.hasError('required')) {
+          <span>El descuento es obligatorio</span>
+        }
+        @if (control.hasError('min') || control.hasError('max')) {
+          <span>El descuento debe estar entre 1 y 100</span>
+        }
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Inicio -->
+  <nz-form-item>
+    <nz-form-label nzRequired nzFor="start">Inicio</nz-form-label>
+    <nz-form-control [nzErrorTip]="startErrorTpl">
+      <nz-date-picker
+        id="start"
+        formControlName="startDate"
+        nzShowTime
+        nzFormat="dd/MM/yyyy hh:mm a"
+        [nzSuffixIcon]="startIcon"
+      />
+      <ng-template #startIcon>
+        <nz-icon nzType="calendar"></nz-icon>
+      </ng-template>
+
+      <ng-template #startErrorTpl let-control>
+        @if (control.hasError('required')) {
+          <span>La fecha de inicio es obligatoria</span>
+        }
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Fin -->
+  <nz-form-item>
+    <nz-form-label nzRequired nzFor="end">Fin</nz-form-label>
+    <nz-form-control [nzErrorTip]="endErrorTpl">
+      <nz-date-picker
+        id="end"
+        formControlName="endDate"
+        nzShowTime
+        nzFormat="dd/MM/yyyy hh:mm a"
+        [nzSuffixIcon]="endIcon"
+      />
+      <ng-template #endIcon>
+        <nz-icon nzType="calendar"></nz-icon>
+      </ng-template>
+
+      <ng-template #endErrorTpl let-control>
+        @if (control.hasError('required')) {
+          <span>La fecha de fin es obligatoria</span>
+        }
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</div>

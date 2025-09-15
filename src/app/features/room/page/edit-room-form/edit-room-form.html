@@ -1,0 +1,58 @@
+<form nz-form [formGroup]="formRoom">
+  <!-- Número de habitación -->
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="hab"
+      >Número habitación</nz-form-label
+    >
+    <nz-form-control nzErrorTip="El número es obligatorio y máx 100 caracteres">
+      <input nz-input formControlName="number" class="w-40" id="hab" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Precio base -->
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="price"
+      >Precio base</nz-form-label
+    >
+    <nz-form-control nzErrorTip="El precio base debe ser mayor a 0.01">
+      <input
+        type="number"
+        nz-input
+        formControlName="basePrice"
+        step="0.01"
+        class="w-32"
+        id="price"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Costo mantenimiento -->
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="9" nzRequired nzFor="mant"
+      >Costo Mantenimiento</nz-form-label
+    >
+
+    <nz-form-control nzErrorTip="El costo de mantenimiento debe ser ≥ 0">
+      <input
+        type="number"
+        nz-input
+        formControlName="maintenanceCost"
+        step="0.01"
+        class="w-32"
+        id="mant"
+      />
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<!--Botones-->
+<div *nzModalFooter>
+  <button
+    nz-button
+    nzType="primary"
+    [disabled]="formRoom.invalid"
+    (click)="onEdit()"
+  >
+    <nz-icon nzType="plus"></nz-icon> Crear Habitación
+  </button>
+</div>

@@ -1,0 +1,21 @@
+<div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col gap-2 transition hover:shadow-xl hover:-translate-y-1">
+  <div class="flex items-center justify-between">
+    <div class="text-lg font-bold text-[#012e5c]">{{ restaurant.name }}</div>
+  </div>
+  <div class="text-sm text-gray-700">
+    <nz-icon nzType="environment" nzTheme="outline" class="mr-1"></nz-icon>
+    {{ restaurant.address }}
+  </div>
+  <div class="text-sm text-gray-700">
+    <nz-icon nzType="phone" nzTheme="outline" class="mr-1"></nz-icon>
+    {{ restaurant.phoneNumber }}
+  </div>
+
+  <div class="mt-2 flex justify-end">
+    <button nz-button nzType="primary" (click)="onView()">
+      <nz-icon nzType="eye"></nz-icon>
+      Ver detalles
+    </button>
+  </div>
+</div>
+

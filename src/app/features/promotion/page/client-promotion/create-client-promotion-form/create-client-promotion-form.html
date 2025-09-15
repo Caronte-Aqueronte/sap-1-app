@@ -1,0 +1,26 @@
+<form nz-form [formGroup]="form">
+  <app-promotion-base-form [form]="form"></app-promotion-base-form>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzFor="visits">Visitas mínimas</nz-form-label>
+    <nz-form-control nzErrorTip="Al menos 1">
+      <nz-input-number
+        id="visits"
+        formControlName="minVisits"
+        [nzMin]="1"
+        [nzStep]="1"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <div *nzModalFooter>
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="form.invalid"
+      (click)="onSubmit()"
+    >
+      Guardar promoción
+    </button>
+  </div>
+</form>

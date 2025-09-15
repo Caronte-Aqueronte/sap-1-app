@@ -1,0 +1,80 @@
+<div class="mb-4 flex flex-wrap items-end gap-3">
+  <div class="flex flex-wrap items-end gap-3">
+    <span class="text-sm text-gray-600">Restaurante:</span>
+    <nz-select
+      nzAllowClear
+      nzPlaceHolder="Seleccione un restaurante"
+      [(ngModel)]="selectedEstablishmentId"
+      name="restaurantFilter"
+      style="min-width: 280px"
+    >
+      @for (establishment of establishments; track establishment.id) {
+      <nz-option [nzValue]="establishment.id" [nzLabel]="establishment.name">
+      </nz-option>
+      }
+    </nz-select>
+  </div>
+
+  <div class="ml-auto flex gap-2">
+    <button nz-button nzType="default" (click)="onQuery()">
+      <nz-icon nzType="search"></nz-icon>
+      Consultar
+    </button>
+    <button nz-button nzType="primary" (click)="onExport()">
+      <nz-icon nzType="download"></nz-icon>
+      Exportar PDF
+    </button>
+  </div>
+</div>
+
+@if (mostPopularRestaurantReport) {
+<div class="bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div>
+      <p class="text-sm text-gray-500">Restaurante:</p>
+      <p class="text-lg font-bold text-gray-900">
+        {{ mostPopularRestaurantReport.restaurantName }}
+      </p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Consumos totales:</p>
+      <p class="text-lg font-bold text-gray-900">
+        {{ mostPopularRestaurantReport.totalEntries }}
+      </p>
+    </div>
+
+    <div class="md:col-span-3">
+      <p class="text-sm text-gray-500">Ingresos totales</p>
+      <p class="text-2xl font-extrabold text-[#16a34a]">
+        Q {{ mostPopularRestaurantReport.totalIncome }}
+      </p>
+    </div>
+  </div>
+
+  <nz-divider nzText="Detalle de consumos"></nz-divider>
+  <nz-table
+    #tableEntries
+    [nzData]="mostPopularRestaurantReport.items"
+    [nzPageSize]="10"
+    [nzScroll]="{ y: '200px', x: '200px' }"
+  >
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Concepto</th>
+        <th>Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of tableEntries.data; track row.date) {
+      <tr>
+        <td>{{ row.date }}</td>
+        <td>{{ row.concept }}</td>
+        <td>Q {{ row.amount }}</td>
+      </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>
+}

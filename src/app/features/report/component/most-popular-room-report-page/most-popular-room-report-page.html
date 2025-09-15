@@ -1,0 +1,99 @@
+<div class="mb-4 flex flex-wrap items-end gap-3">
+  <div class="flex flex-wrap items-end gap-3">
+    <span class="text-sm text-gray-600">Establecimiento:</span>
+    <nz-select
+      nzAllowClear
+      nzPlaceHolder="Seleccione un establecimiento"
+      [(ngModel)]="selectedEstablishmentId"
+      name="establishmentFilter"
+      style="min-width: 280px"
+    >
+      @for (establishment of establishments; track establishment.id) {
+      <nz-option [nzValue]="establishment.id" [nzLabel]="establishment.name">
+      </nz-option>
+      }
+    </nz-select>
+  </div>
+
+  <div class="ml-auto flex gap-2">
+    <button nz-button nzType="default" (click)="onQueryMostPopularRoomReport()">
+      <nz-icon nzType="search"></nz-icon>
+      Consultar
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="onExportMostPopularRoomReport()"
+    >
+      <nz-icon nzType="download"></nz-icon>
+      Exportar PDF
+    </button>
+  </div>
+</div>
+
+@if (mostPopularRoomReport) {
+<div class="bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div>
+      <p class="text-sm text-gray-500">Habitación:</p>
+      <p class="text-lg font-bold text-gray-900">
+        {{ mostPopularRoomReport.roomNumber }}
+      </p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Hotel:</p>
+      <p class="text-lg font-bold text-gray-900">
+        {{ mostPopularRoomReport.hotelName }}
+      </p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Estadias totales:</p>
+      <p class="text-lg font-bold text-gray-900">
+        {{ mostPopularRoomReport.totalEntries }}
+      </p>
+    </div>
+
+    <div class="md:col-span-3">
+      <p class="text-sm text-gray-500">Ingresos totales</p>
+      <p class="text-2xl font-extrabold text-[#fb9120]">
+        Q {{ mostPopularRoomReport.totalIncome }}
+      </p>
+    </div>
+  </div>
+
+  <nz-divider nzText="Estadias"></nz-divider>
+  <nz-table
+    #tableBookings
+    [nzData]="mostPopularRoomReport.bookings"
+    [nzPageSize]="10"
+    [nzScroll]="{ y: '200px', x: '200px' }"
+  >
+    <thead>
+      <tr>
+        <th>Check-In</th>
+        <th>Check-Out</th>
+        <th>Cliente</th>
+        <th>Promoción</th>
+        <th>Subtotal</th>
+        <th>Descuento</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of tableBookings.data; track row.id) {
+      <tr>
+        <td>{{ row.checkInAt }}</td>
+        <td>{{ row.checkOutAt }}</td>
+        <td>{{ row.clientName }}</td>
+        <td>{{ row.promotionName || "—" }}</td>
+        <td>Q {{ row.subTotalAmount }}</td>
+        <td>Q {{ row.discountAmount }}</td>
+        <td>Q {{ row.totalAmount }}</td>
+      </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>
+}

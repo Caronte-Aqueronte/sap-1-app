@@ -1,0 +1,63 @@
+<!-- Contenedor scrollable de toda la ventana -->
+<div class="max-h-[60vh] overflow-y-auto p-2 space-y-4">
+  <!-- Panel restaurante más popular -->
+  <div class="mb-4">
+    @if (popular) {
+    <div class="p-5 bg-white border border-gray-200 rounded-2xl shadow-md">
+      <!-- encabezado -->
+      <div class="flex items-center gap-2 mb-2">
+        <nz-icon
+          nzType="fire"
+          nzTheme="twotone"
+          class="text-[#fb9120] text-xl"
+        ></nz-icon>
+        <span class="text-lg font-bold text-gray-800">
+          Restaurante más popular
+        </span>
+      </div>
+
+      <!-- contenido -->
+      <div class="space-y-2 text-sm text-gray-600">
+        <p>
+          Se detectó que
+          <span class="font-semibold text-[#012e5c]">
+            {{ popular.restaurantName }}
+          </span>
+          es el restaurante más popular ahora.
+        </p>
+
+        <!-- rating -->
+        <div class="flex items-center gap-3">
+          <nz-rate [ngModel]="popular.avgRating" nzDisabled></nz-rate>
+          <span class="text-sm font-medium text-gray-700">
+            ({{ popular.avgRating }} / 5, {{ popular.totalReviews }} reseñas)
+          </span>
+        </div>
+
+        <p class="text-xs text-gray-500">
+          La promoción se aplicará automáticamente a este restaurante.
+        </p>
+      </div>
+    </div>
+    }
+  </div>
+  <nz-divider nzText="Completa la Información"></nz-divider>
+
+  <!-- Formulario -->
+  <form nz-form [formGroup]="form">
+    <app-promotion-base-form [form]="form"></app-promotion-base-form>
+  </form>
+</div>
+
+<!-- Footer fijo -->
+<div *nzModalFooter>
+  <button
+    nz-button
+    nzType="primary"
+    [disabled]="form.invalid"
+    (click)="onSubmit()"
+  >
+    <nz-icon nzType="plus"></nz-icon>
+    Guardar promoción
+  </button>
+</div>
